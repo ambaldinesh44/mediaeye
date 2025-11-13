@@ -39,7 +39,11 @@ export const CategoryPostList = ({categories={},posts=[],currentPage=1,totalPage
             /> */
           )}
           <Link href={post.link.replace("https://www.mediaeyenews.com", "")}>
-            {post.title.rendered}
+          
+              <span
+        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+      />
+
           </Link>
         </li>
       );
