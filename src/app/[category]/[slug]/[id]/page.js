@@ -23,8 +23,8 @@ export async function generateMetadata({ params }) {
   });
 }
 export default  async function CategoryPage({ params }) {
-  const { slug,page } = await params;
-console.log("ddddddddddddd-----------1",slug)
+/*   const {category, slug,page } = await params;
+console.log("ddddddddddddd-----------1 ---ssss",slug,category)
 console.log("ddddddddddddd-----------2",page)
 
 
@@ -35,12 +35,12 @@ console.log("ddddddddddddd-----------2",page)
 
   // 1. Get category ID by slug
  const res = await fetch(
-    `${CONFIG.API_URL}categories?slug=${slug}`, { next: { revalidate: 60 } }
+    `${CONFIG.API_URL}categories?slug=${category}`, { next: { revalidate: 60 } }
    );
-  console.log("slugslugslug",slug)
+  console.log("slugslugslug",category)
    const categories = await res.json();
    const perPage=10;
-    if (!categories.length) return <h1>Category not found</h1>;
+    if (!categories.length) return <h1>Category page main not found</h1>;
   const catId = categories[0].id;
 
    //console.log("categoriescategoriescategories",categories) 
@@ -56,13 +56,35 @@ console.log("ddddddddddddd-----------2",page)
     console.log("totalPages",totalPage,`${CONFIG.API_URL}posts?categories=${catId}&per_page=${perPage}&page=${currentPage}&_embed`)
 const post = posts[0];
     //    console.log("res1",posts)
-/*         const sizes = post._embedded["wp:featuredmedia"][0].media_details.sizes;
-console.log("Thumbnail:", sizes.thumbnail.source_url);
-console.log("Medium:", sizes.medium.source_url);
-console.log("Full:", sizes.full.source_url); */
 
-  return (
-    <CategoryPostList categories={categories} posts={posts} page_link_url={`/category/${slug}/`} perPage={perPage} totalPage ={totalPage} currentPage={currentPage}></CategoryPostList>
+ */
+
+    const { category, slug, id } = await params;
+
+  // Remove .html if it exists
+  const postId = id.replace(".html", "");
+  console.log(postId);
+
   
+  const apiUrl = `${CONFIG.API_URL}posts/${postId}`;
+  console.log(apiUrl,postId);
+  const res = await fetch(apiUrl, { next: { revalidate: 30 } });
+
+  if (!res.ok) {
+    return <h1>Post not found</h1>;
+  }
+
+  const post = await res.json();
+  return (
+      <>
+
+<div>
+      <h1>{post.title.rendered}</h1>
+      <div
+        dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+      />
+    </div>
+      </>
+    
   );
 }
