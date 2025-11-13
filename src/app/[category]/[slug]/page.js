@@ -1,32 +1,8 @@
-/* 
-import { CategoryList } from "@components/CategoryList";
-import { CONFIG } from "@util/config";
-
-export default  async function CategoryPage({ params }) {
-  const { slug } = await params;
-console.log("ddddddddddddd",slug)
-    const res = await fetch(
-      `${CONFIG.API_URL}categories?per_page=100&_embed`,
-    { next: { revalidate: 60 } }
-    );
-   const posts = await res.json(); 
-
-     const totalCategories = res.headers.get("X-WP-Total");
-     console.log("totalCategories",totalCategories)
-  //console.log("poststs",posts)
-  return (
-    <>
-    <CategoryList categories={posts}></CategoryList> 
-    </>
-  );
-}
- */
-
 import { CategoryPostList } from "@components/CategoryPostList";
 import { CONFIG } from "@util/config";
 import generateMetadatas from "@util/metadata";
 export async function generateMetadata({ params }) {
-   const { category,slug,page } = await params;
+   const { slug,page } = await params;
 
 
   const imageUrl =  "";
@@ -47,7 +23,7 @@ export async function generateMetadata({ params }) {
   });
 }
 export default  async function CategoryPage({ params }) {
-  const { category,slug,page } = await params;
+  const { slug,page } = await params;
 console.log("ddddddddddddd-----------11",slug)
 console.log("ddddddddddddd-----------22",page)
 
@@ -59,7 +35,7 @@ console.log("ddddddddddddd-----------22",page)
 
   // 1. Get category ID by slug
  const res = await fetch(
-    `${CONFIG.API_URL}categories?slug=${category}`, { next: { revalidate: 60 } }
+    `${CONFIG.API_URL}categories?slug=${slug}`, { next: { revalidate: 60 } }
    );
   console.log("slugslugslug",slug)
    const categories = await res.json();
