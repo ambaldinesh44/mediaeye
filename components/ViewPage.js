@@ -1,7 +1,10 @@
+'use client';
+
 import { Comments } from './Comments';
 import { SocialShare } from './SocialShare';
+import { RelatedPosts } from './RelatedPosts';
 
-export const ViewPage = ({post, url})=>{
+export const ViewPage = ({post, url, relatedPosts})=>{
 
     return(
         <>
@@ -19,6 +22,9 @@ export const ViewPage = ({post, url})=>{
       <div
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
+
+      {/* Related Posts Section */}
+     <RelatedPosts posts={relatedPosts} /> 
 
       {/* Comments Section */}
       <Comments postId={post.id} />

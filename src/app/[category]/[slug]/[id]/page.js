@@ -80,9 +80,31 @@ const post = posts[0];
   // Build the full URL for sharing
   const fullUrl = `https://www.mediaeyenews.com/${category}/${slug}/${id}`;
 
+  // Fetch related posts based on the post's category
+  let relatedPosts = [];
+  if (post.categories && post.categories.length > 0) {
+    try {
+      const categoryId = post.categories[0];
+      const relatedRes = await fetch(
+        `${CONFIG.API_URL}posts?categories=${categoryId}&per_page=6&exclude=${postId}&_embed`,
+        { next: { revalidate: 30 } }
+      );
+
+      if (relatedRes.ok) {
+        const contentType = relatedRes.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          relatedPosts = await relatedRes.json();
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching related posts:', error);
+      relatedPosts = [];
+    }
+  }
+
   return (
       <>
-      <ViewPage post={post} url={fullUrl} category={category} slug={slug}/>
+      <ViewPage post={post} url={fullUrl} relatedPosts={relatedPosts}/>
 
 {/* <div>
       <h1>{post.title.rendered}</h1>
