@@ -1,19 +1,20 @@
-import { CategoryPostList } from "@components/CategoryPostList";
+import { ViewPage } from "@components/ViewPage";
 import { CONFIG } from "@util/config";
 import generateMetadatas from "@util/metadata";
+
 export async function generateMetadata({ params }) {
    const { slug,page } = await params;
 
 
   const imageUrl =  "";
 
-  console.log("metattata",{
+  /* console.log("metattata",{
     title: `${slug} News – Latest Updates & Breaking Stories | MediaEye News`,
     desc:`Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
     keywords: `Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
     url:`https://www.mediaeyenews.com/${slug}`,
     img: imageUrl,
-  })
+  }) */
   return generateMetadatas({
    title: `${slug} News – Latest Updates & Breaking Stories | MediaEye News`,
     desc:`Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
@@ -63,11 +64,11 @@ const post = posts[0];
 
   // Remove .html if it exists
   const postId = id.replace(".html", "");
-  console.log(postId);
+ // console.log(postId);
 
   
   const apiUrl = `${CONFIG.API_URL}posts/${postId}`;
-  console.log(apiUrl,postId);
+ /// console.log(apiUrl,postId);
   const res = await fetch(apiUrl, { next: { revalidate: 30 } });
 
   if (!res.ok) {
@@ -75,15 +76,20 @@ const post = posts[0];
   }
 
   const post = await res.json();
+
+  // Build the full URL for sharing
+  const fullUrl = `https://www.mediaeyenews.com/${category}/${slug}/${id}`;
+
   return (
       <>
+      <ViewPage post={post} url={fullUrl} category={category} slug={slug}/>
 
-<div>
+{/* <div>
       <h1>{post.title.rendered}</h1>
       <div
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
-    </div>
+    </div> */}
       </>
     
   );
