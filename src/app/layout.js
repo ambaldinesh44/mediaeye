@@ -30,10 +30,26 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-         <Header /> 
+         <Header />
         <main>
           {children}
         </main>
+
+        {/* AdPlugg Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(ac) {
+                var d = document, s = 'script', id = 'adplugg-adjs';
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id; js.async = 1;
+                js.src = '//www.adplugg.com/serve/' + ac + '/js/1.1/ad.js';
+                fjs.parentNode.insertBefore(js, fjs);
+              }('A48224134'));
+            `,
+          }}
+        />
       </body>
     </html>
   );
