@@ -15,6 +15,12 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
   // Get recent posts for right sidebar (collect first 2 from each category)
   const recentPosts = categoryNews?.flatMap(cat => cat.posts?.slice(0, 2) || []).slice(0, 8) || [];
 
+  // Get latest news posts (all posts from all categories, limited to 10)
+  const latestNewsPosts = categoryNews?.flatMap(cat => cat.posts || []).slice(0, 10) || [];
+
+  // Get more news items for sidebar (different from latest news, limited to 4)
+  const moreNewsPosts = categoryNews?.flatMap(cat => cat.posts || []).slice(10, 14) || [];
+
   // Helper function to get post URL
   const getPostUrl = (post) => {
     const categorySlug = post._embedded?.['wp:term']?.[0]?.[0]?.slug || 'news';
@@ -82,6 +88,125 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
         </div>
       </div>
 
+      {/* Latest News Section */}
+      <div className="row mt-4 mt-md-5">
+        <div className="col-12">
+          <div className="d-flex justify-content-between align-items-center mb-3 mb-md-4">
+            <h2 className="h4 h3-md mb-0">Latest News</h2>
+            <Link href="/news" className="text-danger text-decoration-none fw-semibold">
+              View All →
+            </Link>
+          </div>
+        </div>
+
+        <div className="col-12 col-lg-8">
+          <div className="latest-news-list">
+            {latestNewsPosts.map((post, index) => (
+              <div key={post.id}>
+                {index === 0 ? (
+                  // First item - Large featured card
+                  <Link href={getPostUrl(post)} className="text-decoration-none">
+                    <div className="featured-news-card mb-3 mb-md-4">
+                      <div className="position-relative">
+                        <img
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered}
+                          className="featured-news-img"
+                        />
+                        <div className="featured-overlay">
+                          <h3
+                            className="text-white mb-2 featured-title"
+                            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                          />
+                          <div
+                            className="text-white-50 featured-excerpt"
+                            dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ) : (
+                  // Regular news items
+                  <Link href={getPostUrl(post)} className="text-decoration-none">
+                    <div className="news-item border-bottom py-3 py-md-4">
+                      <div className="row g-3">
+                        <div className="col-4 col-md-3">
+                          <img
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered}
+                            className="news-item-img"
+                          />
+                        </div>
+                        <div className="col-8 col-md-9">
+                          <span className="badge bg-danger mb-2">
+                            {getTimeAgo(post.date)}
+                          </span>
+                          <h5
+                            className="news-item-title mb-2"
+                            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                          />
+                          <div
+                            className="news-item-excerpt text-muted"
+                            dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }}
+                          />
+                          <small className="text-muted d-block mt-2">
+                            <i className="bi bi-geo-alt me-1"></i>
+                            {post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}
+                          </small>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right sidebar - More News */}
+        <div className="col-12 col-lg-4">
+          <div className="more-news-sidebar">
+            <div className="d-flex align-items-center mb-3 mb-md-4">
+              <span className="text-danger me-2">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8.5 2.687c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
+                </svg>
+              </span>
+              <h4 className="mb-0 h5 h4-md fw-bold">More</h4>
+            </div>
+
+            <div className="more-news-list">
+              {moreNewsPosts.map((post) => (
+                <Link
+                  key={post.id}
+                  href={getPostUrl(post)}
+                  className="text-decoration-none"
+                >
+                  <div className="more-news-item d-flex gap-3 mb-3 pb-3 border-bottom">
+                    <img
+                      src={getFeaturedImage(post)}
+                      alt={post.title.rendered}
+                      className="more-news-img"
+                    />
+                    <div className="flex-grow-1">
+                      <h6
+                        className="more-news-title mb-2"
+                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+                      />
+                      <small className="text-muted d-flex align-items-center">
+                        <i className="bi bi-clock me-1"></i>
+                        {getTimeAgo(post.date)}
+                      </small>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <style jsx>{`
         /* Mobile First Styles */
         .recent-post-img {
@@ -112,6 +237,111 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
           position: relative;
         }
 
+        /* Latest News Styles */
+        .featured-news-img {
+          width: 100%;
+          height: 300px;
+          object-fit: cover;
+          border-radius: 8px;
+        }
+
+        .featured-overlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+          padding: 1.5rem;
+          border-radius: 0 0 8px 8px;
+        }
+
+        .featured-title {
+          font-size: 1.25rem;
+          font-weight: 700;
+          line-height: 1.4;
+        }
+
+        .featured-excerpt {
+          font-size: 0.875rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .news-item {
+          transition: background-color 0.2s;
+        }
+
+        .news-item:hover {
+          background-color: #f8f9fa;
+        }
+
+        .news-item-img {
+          width: 100%;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 6px;
+        }
+
+        .news-item-title {
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: #333;
+          line-height: 1.4;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .news-item-excerpt {
+          font-size: 0.85rem;
+          line-height: 1.5;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        /* More News Sidebar Styles */
+        .more-news-sidebar {
+          background: #f8f9fa;
+          padding: 1.5rem;
+          border-radius: 8px;
+        }
+
+        .more-news-img {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 6px;
+          flex-shrink: 0;
+        }
+
+        .more-news-title {
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: #333;
+          line-height: 1.4;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+
+        .more-news-item {
+          transition: background-color 0.2s;
+          border-radius: 6px;
+          padding: 0.5rem;
+          margin: -0.5rem;
+          margin-bottom: 0.75rem !important;
+        }
+
+        .more-news-item:hover {
+          background-color: #ffffff;
+        }
+
         /* Tablet (768px and up) */
         @media (min-width: 768px) {
           .recent-post-img {
@@ -121,6 +351,43 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
 
           .recent-post-title {
             font-size: 0.95rem;
+          }
+
+          .featured-news-img {
+            height: 400px;
+          }
+
+          .featured-title {
+            font-size: 1.75rem;
+          }
+
+          .featured-excerpt {
+            font-size: 1rem;
+          }
+
+          .news-item-img {
+            height: 100px;
+          }
+
+          .news-item-title {
+            font-size: 1.1rem;
+          }
+
+          .news-item-excerpt {
+            font-size: 0.95rem;
+          }
+
+          .more-news-sidebar {
+            padding: 1.75rem;
+          }
+
+          .more-news-img {
+            width: 85px;
+            height: 85px;
+          }
+
+          .more-news-title {
+            font-size: 1rem;
           }
         }
 
@@ -138,6 +405,31 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
           .recent-posts-sidebar {
             position: sticky;
             top: 20px;
+          }
+
+          .featured-news-img {
+            height: 450px;
+          }
+
+          .featured-title {
+            font-size: 2rem;
+          }
+
+          .news-item-img {
+            height: 120px;
+          }
+
+          .more-news-sidebar {
+            padding: 2rem;
+          }
+
+          .more-news-img {
+            width: 90px;
+            height: 90px;
+          }
+
+          .more-news-title {
+            font-size: 1.05rem;
           }
         }
 
@@ -168,6 +460,9 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
       `}</style>
     </div>
   );
+
+
+  
 
 /*     const newsItems = [
   "Breaking: Market hits new high",
