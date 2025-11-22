@@ -1,7 +1,11 @@
 "use client"
 
 import Link from 'next/link';
-import { SwiperCarousel } from './SwiperCarousel';
+import dynamic from 'next/dynamic';
+
+const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
+  ssr: false,
+});
 
 export const HomePage = ({term='',results=[],categoryNews=[]})=>{
 
