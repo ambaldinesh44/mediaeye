@@ -36,7 +36,6 @@ export default function Pagination({
 
   return (
     <nav>
-      currentPage  --{currentPage}
       <ul className="pagination justify-content-center">
         {/* Previous */}
         <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
