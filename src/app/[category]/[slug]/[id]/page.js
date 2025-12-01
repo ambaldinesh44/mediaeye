@@ -107,7 +107,7 @@ const post = posts[0];
  // console.log(postId);
 
   
-  const apiUrl = `${CONFIG.API_URL}posts/${postId}`;
+  const apiUrl = `${CONFIG.API_URL}posts/${postId}?_embed`;
  /// console.log(apiUrl,postId);
   const res = await fetch(apiUrl, { next: { revalidate: 30 } });
 

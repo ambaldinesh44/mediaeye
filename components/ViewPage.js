@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Comments } from './Comments';
 import { SocialShare } from './SocialShare';
 import { RelatedPosts } from './RelatedPosts';
+import '../style/home.css';
 
 export const ViewPage = ({ post, url, relatedPosts }) => {
 
@@ -167,7 +168,7 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
                       height={675}
                       priority
                       className="img-fluid"
-                      style={{ width: '100%', height: 'auto' }}
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '20px' }}
                     />
                   </div>
 
@@ -180,7 +181,9 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
                       <div className="col-md-8 col-12 mb-2 mb-md-0">
                         <strong>Tags :</strong>
                         {tags.map((tag) => (
-                          <span key={tag.id} className="tag">{tag.name}</span>
+                          <Link key={tag.id} href={`/tag/${tag.slug}`}>
+                            <span className="tag">{tag.name}</span>
+                          </Link>
                         ))}
                       </div>
 

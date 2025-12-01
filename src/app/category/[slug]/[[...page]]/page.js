@@ -64,10 +64,7 @@ console.log("Full:", sizes.full.source_url); */
 
   return (
     <>
-    <pre style={{display:"none"}}>
-     {JSON.stringify(categories)}
-  {JSON.stringify(posts)}
-</pre>
+
 
     <CategoryPostList categories={categories} posts={posts} page_link_url={`/category/${slug}/`} perPage={perPage} totalPage ={totalPage} currentPage={currentPage}></CategoryPostList>
    </>

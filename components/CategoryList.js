@@ -1,5 +1,6 @@
 "use client";
 import Image from 'next/image';
+import '../style/home.css';
 export const CategoryList = ({categories={},posts=[]})=>{
 
     return(
