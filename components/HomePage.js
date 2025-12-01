@@ -1,5 +1,5 @@
 "use client"
-
+import "style/home.css";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 

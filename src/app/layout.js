@@ -1,18 +1,12 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Inria_Sans } from "next/font/google";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.css";
 import { Header } from "@components/Header";
 import { Footer } from "@components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ["latin"] });
+const inria = Inria_Sans({ subsets: ["latin"], weight: ["300","400","700"] });
 
 export const metadata = {
   title: "Media Eye News - Latest News & Updates",
@@ -30,7 +24,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body  className={`${inter.className} ${inria.className}`}>
          <Header />
         <main>
           {children}
