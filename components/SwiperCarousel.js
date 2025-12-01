@@ -56,21 +56,21 @@ export const SwiperCarousel = ({ posts }) => {
         {posts.map((post) => (
           <SwiperSlide key={post.id}>
             <Link href={getPostUrl(post)}>
-              <div className="position-relative" style={{ height: '500px', cursor: 'pointer' }}>
-                <img
+             {/*  <div className="position-relative" style={{ height: '500px', cursor: 'pointer' }}>
+              */}   <img
                   src={getFeaturedImage(post)}
                   className="d-block w-100"
                   alt={post.title.rendered}
                   style={{ height: '100%', objectFit: 'cover' }}
                 />
-                <div className="swiper-caption bg-dark bg-opacity-75 p-4">
+                 <div className="overlay-content">
                   <h3 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
                   <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
                   <p className="mb-0">
                     <small>{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'} • {getTimeAgo(post.date)}</small>
                   </p>
                 </div>
-              </div>
+            {/*   </div> */}
             </Link>
           </SwiperSlide>
         ))}
@@ -81,27 +81,6 @@ export const SwiperCarousel = ({ posts }) => {
           width: 100%;
           height: 500px;
         }
-
-        .swiper-caption {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          text-align: left;
-          z-index: 10;
-        }
-
-        .swiper-caption h3 {
-          font-size: 1.5rem;
-          font-weight: bold;
-          margin-bottom: 0.5rem;
-          color: white;
-        }
-
-        .swiper-caption p {
-          color: white;
-        }
-
         .swiper-button-prev,
         .swiper-button-next {
           color: white !important;

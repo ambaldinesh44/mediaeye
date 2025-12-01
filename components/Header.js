@@ -34,17 +34,17 @@ export const Header = () => {
             {/* Desktop Navigation */}
             <div className="desktop-nav">
               <ul className="nav-links">
-                <li><a href="#" className="active">Home</a></li>
-                <li><a href="#">Politics</a></li>
-                <li><a href="#">Business</a></li>
-                <li><a href="#">Stock Market</a></li>
-                <li><a href="#">Sports</a></li>
-                <li><a href="#">Crime & Law</a></li>
-                <li><a href="#">Health</a></li>
-                <li><a href="#">Education</a></li>
-                <li><a href="#">Entertainment</a></li>
-                <li><a href="#">Lifestyle</a></li>
-                <li><a href="#">Environment</a></li>
+                <li><Link href="/" className="active">Home</Link></li>
+                <li><Link href="/category/politics">Politics</Link></li>
+                <li><Link href="/category/business">Business</Link></li>
+                <li><Link href="/category/stock-market">Stock Market</Link></li>
+                <li><Link href="/category/sports">Sports</Link></li>
+                <li><Link href="/category/crime-law">Crime & Law</Link></li>
+                <li><Link href="/category/health">Health</Link></li>
+                <li><Link href="/category/education">Education</Link></li>
+                <li><Link href="/category/entertainment">Entertainment</Link></li>
+                <li><Link href="/category/lifestyle">Lifestyle</Link></li>
+                <li><Link href="/category/environment">Environment</Link></li>
               </ul>
 
               <div className="nav-right">
@@ -138,17 +138,17 @@ export const Header = () => {
           </div>
 
           <ul className="mobile-nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Politics</a></li>
-            <li><a href="#">Business</a></li>
-            <li><a href="#">Stock Market</a></li>
-            <li><a href="#">Sports</a></li>
-            <li><a href="#">Crime & Law</a></li>
-            <li><a href="#">Health</a></li>
-            <li><a href="#">Education</a></li>
-            <li><a href="#">Entertainment</a></li>
-            <li><a href="#">Lifestyle</a></li>
-            <li><a href="#">Environment</a></li>
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/category/politics">Politics</Link></li>
+            <li><Link href="/category/business">Business</Link></li>
+            <li><Link href="/category/stock-market">Stock Market</Link></li>
+            <li><Link href="/category/sports">Sports</Link></li>
+            <li><Link href="/category/crime-law">Crime & Law</Link></li>
+            <li><Link href="/category/health">Health</Link></li>
+            <li><Link href="/category/education">Education</Link></li>
+            <li><Link href="/category/entertainment">Entertainment</Link></li>
+            <li><Link href="/category/lifestyle">Lifestyle</Link></li>
+            <li><Link href="/category/environment">Environment</Link></li>
           </ul>
 
           <div className="mobile-live">

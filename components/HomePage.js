@@ -1,5 +1,5 @@
 "use client"
-import "style/home.css";
+import  "../style/home.css"
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
@@ -15,6 +15,10 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
   // Get recent posts for right sidebar (collect first 2 from each category)
   const recentPosts = categoryNews?.flatMap(cat => cat.posts?.slice(0, 2) || []).slice(0, 8) || [];
 
+    // Get top slider posts (first 5 posts from results)
+  const topSlider = results?.slice(0, 5) || [];
+
+  
   // Get latest news posts (all posts from all categories, limited to 10)
   const latestNewsPosts = categoryNews?.flatMap(cat => cat.posts || []).slice(0, 10) || [];
 
@@ -46,14 +50,85 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
   };
 
   return (
-    <div className="container-fluid py-2 py-md-3 py-lg-4 px-2 px-md-3">
+      <>
+     <div class="main-wrapper">
+
+       
+      <div class="container-custom">
+  <div class="row g-3">
+
+
+    <div class="col-lg-9 col-md-8 col-12">
+      <div class="section-box">
+
+        <div class="section-title">
+          <h2>Trending Stories</h2>
+          <a href="#">View All →</a>
+        </div>
+
+        {topSlider.length > 0 ? (
+          <SwiperCarousel posts={topSlider} />
+        ) : (
+            <>
+            </>
+        )}
+
+      </div>
+    </div>
+
+    
+    <div class="col-lg-3 col-md-4 col-12">
+       <div class="section-box right">
+
+        <div class="section-title">
+          <h3><img src="images/trending-now-icon.png" class="img-fluid me-1" width="16px"/> Trending Now</h3>
+        </div>
+
+        <div class="side-list">
+
+          <div class="list-item">
+             <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="" />
+            <div class="list-item-content">
+              <h4>Economic Recovery Shows Strong Signs</h4>
+              <span><i class="bi bi-clock clock-icon"></i> 4 hours ago</span>
+            </div>
+          </div>
+
+          <div class="list-item">
+             <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt=""/>
+           <div class="list-item-content">
+              <h4>Climate Summit Reaches Historic Agreement</h4>
+              <span><i class="bi bi-clock clock-icon"></i> 6 hours ago</span>
+            </div>
+          </div>
+
+          <div class="list-item">
+           <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt=""/>
+           <div class="list-item-content">
+              <h4>Global Markets Show Mixed Reactions</h4>
+              <span><i class="bi bi-clock clock-icon"></i> 7 hours ago</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div> 
+    </div>
+
+  </div>
+</div>
+
+
+     </div>
+     </>
+   /*  <div className="container-fluid py-2 py-md-3 py-lg-4 px-2 px-md-3">
       <div className="row g-3 g-md-4">
-        {/* Left Side - Swiper Carousel */}
+
         <div className="col-12 col-lg-8">
           <SwiperCarousel posts={featuredPosts} />
         </div>
 
-        {/* Right Side - Recent Posts List */}
+
         <div className="col-12 col-lg-4">
           <div className="recent-posts-sidebar">
             <h4 className="mb-3 h5 h4-md">Recent Stories</h4>
@@ -88,7 +163,7 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
         </div>
       </div>
 
-      {/* Latest News Section */}
+      
       <div className="row mt-4 mt-md-5">
         <div className="col-12">
           <div className="d-flex justify-content-between align-items-center mb-3 mb-md-4">
@@ -164,7 +239,7 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
           </div>
         </div>
 
-        {/* Right sidebar - More News */}
+   
         <div className="col-12 col-lg-4">
           <div className="more-news-sidebar">
             <div className="d-flex align-items-center mb-3 mb-md-4">
@@ -207,258 +282,8 @@ export const HomePage = ({term='',results=[],categoryNews=[]})=>{
         </div>
       </div>
 
-      <style jsx>{`
-        /* Mobile First Styles */
-        .recent-post-img {
-          width: 60px;
-          height: 60px;
-          object-fit: cover;
-          border-radius: 4px;
-        }
-
-        .recent-post-title {
-          font-size: 0.875rem;
-          line-height: 1.3;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .list-group-item {
-          transition: background-color 0.2s;
-        }
-
-        .list-group-item:hover {
-          background-color: #f8f9fa;
-        }
-
-        .recent-posts-sidebar {
-          position: relative;
-        }
-
-        /* Latest News Styles */
-        .featured-news-img {
-          width: 100%;
-          height: 300px;
-          object-fit: cover;
-          border-radius: 8px;
-        }
-
-        .featured-overlay {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-          padding: 1.5rem;
-          border-radius: 0 0 8px 8px;
-        }
-
-        .featured-title {
-          font-size: 1.25rem;
-          font-weight: 700;
-          line-height: 1.4;
-        }
-
-        .featured-excerpt {
-          font-size: 0.875rem;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .news-item {
-          transition: background-color 0.2s;
-        }
-
-        .news-item:hover {
-          background-color: #f8f9fa;
-        }
-
-        .news-item-img {
-          width: 100%;
-          height: 80px;
-          object-fit: cover;
-          border-radius: 6px;
-        }
-
-        .news-item-title {
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: #333;
-          line-height: 1.4;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .news-item-excerpt {
-          font-size: 0.85rem;
-          line-height: 1.5;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        /* More News Sidebar Styles */
-        .more-news-sidebar {
-          background: #f8f9fa;
-          padding: 1.5rem;
-          border-radius: 8px;
-        }
-
-        .more-news-img {
-          width: 80px;
-          height: 80px;
-          object-fit: cover;
-          border-radius: 6px;
-          flex-shrink: 0;
-        }
-
-        .more-news-title {
-          font-size: 0.95rem;
-          font-weight: 600;
-          color: #333;
-          line-height: 1.4;
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-
-        .more-news-item {
-          transition: background-color 0.2s;
-          border-radius: 6px;
-          padding: 0.5rem;
-          margin: -0.5rem;
-          margin-bottom: 0.75rem !important;
-        }
-
-        .more-news-item:hover {
-          background-color: #ffffff;
-        }
-
-        /* Tablet (768px and up) */
-        @media (min-width: 768px) {
-          .recent-post-img {
-            width: 70px;
-            height: 70px;
-          }
-
-          .recent-post-title {
-            font-size: 0.95rem;
-          }
-
-          .featured-news-img {
-            height: 400px;
-          }
-
-          .featured-title {
-            font-size: 1.75rem;
-          }
-
-          .featured-excerpt {
-            font-size: 1rem;
-          }
-
-          .news-item-img {
-            height: 100px;
-          }
-
-          .news-item-title {
-            font-size: 1.1rem;
-          }
-
-          .news-item-excerpt {
-            font-size: 0.95rem;
-          }
-
-          .more-news-sidebar {
-            padding: 1.75rem;
-          }
-
-          .more-news-img {
-            width: 85px;
-            height: 85px;
-          }
-
-          .more-news-title {
-            font-size: 1rem;
-          }
-        }
-
-        /* Desktop (992px and up) */
-        @media (min-width: 992px) {
-          .recent-post-img {
-            width: 80px;
-            height: 80px;
-          }
-
-          .recent-post-title {
-            font-size: 1rem;
-          }
-
-          .recent-posts-sidebar {
-            position: sticky;
-            top: 20px;
-          }
-
-          .featured-news-img {
-            height: 450px;
-          }
-
-          .featured-title {
-            font-size: 2rem;
-          }
-
-          .news-item-img {
-            height: 120px;
-          }
-
-          .more-news-sidebar {
-            padding: 2rem;
-          }
-
-          .more-news-img {
-            width: 90px;
-            height: 90px;
-          }
-
-          .more-news-title {
-            font-size: 1.05rem;
-          }
-        }
-
-        /* Large Desktop (1200px and up) */
-        @media (min-width: 1200px) {
-          .recent-posts-sidebar {
-            max-height: calc(100vh - 100px);
-            overflow-y: auto;
-          }
-
-          .recent-posts-sidebar::-webkit-scrollbar {
-            width: 6px;
-          }
-
-          .recent-posts-sidebar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-          }
-
-          .recent-posts-sidebar::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 3px;
-          }
-
-          .recent-posts-sidebar::-webkit-scrollbar-thumb:hover {
-            background: #555;
-          }
-        }
-      `}</style>
-    </div>
+  
+    </div> */
   );
 
 

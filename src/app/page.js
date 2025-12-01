@@ -165,7 +165,7 @@ console.log("widget",widgetAreas); */
     <>
   <pre style={{display:"none"}}>
   
-  {JSON.stringify(topCategoeyNews)}
+  {JSON.stringify(results)}
 </pre>
 
    <HomePage term={term} results={results} categoryNews={topCategoeyNews}></HomePage>
