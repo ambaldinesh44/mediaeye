@@ -1,2 +1,14 @@
+# Robots.txt for MediaEye News
+# Allow all search engines to crawl the site
+
 User-agent: *
-Disallow: /
+Allow: /
+
+# Block access to specific paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://www.mediaeyenews.com/sitemap.xml

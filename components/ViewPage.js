@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Comments } from './Comments';
 import { SocialShare } from './SocialShare';
 import { RelatedPosts } from './RelatedPosts';
@@ -31,8 +32,82 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
   // Get tags
   const tags = post._embedded?.['wp:term']?.[1] || [];
 
+  // Get author information
+  const authorName = post._embedded?.author?.[0]?.name || 'MediaEye News';
+  const authorUrl = post._embedded?.author?.[0]?.link || 'https://www.mediaeyenews.com';
+
+  // Clean title and excerpt for structured data
+  const cleanTitle = post.title.rendered?.replace(/<[^>]*>/g, '') || '';
+  const cleanExcerpt = post.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '';
+
+  // JSON-LD structured data for article
+  const articleStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": cleanTitle,
+    "description": cleanExcerpt,
+    "image": getFeaturedImage(post),
+    "datePublished": post.date,
+    "dateModified": post.modified || post.date,
+    "author": {
+      "@type": "Person",
+      "name": authorName,
+      "url": authorUrl
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MediaEye News",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.mediaeyenews.com/images/logo-black.svg"
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": url
+    },
+    "articleSection": categoryName,
+    "keywords": tags.map(tag => tag.name).join(', '),
+    "url": url
+  };
+
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://www.mediaeyenews.com"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": categoryName,
+        "item": `https://www.mediaeyenews.com/category/${categorySlug}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": cleanTitle
+      }
+    ]
+  };
+
   return (
     <>
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+
       <div className="main-wrapper">
         <div className="breadcrumb-wrapper">
           <div className="container-custom">
@@ -73,7 +148,15 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
                   </div>
 
                   <div className="article-detailed-img">
-                    <img src={getFeaturedImage(post)} alt="article" className="img-fluid" />
+                    <Image
+                      src={getFeaturedImage(post)}
+                      alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'article'}
+                      width={1200}
+                      height={675}
+                      priority
+                      className="img-fluid"
+                      style={{ width: '100%', height: 'auto' }}
+                    />
                   </div>
 
                   <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
@@ -114,7 +197,15 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
 
                           {/* IMAGE COL (col-4) */}
                           <div className="col-12 col-md-4">
-                            <img src={getFeaturedImage(relatedPost)} className="related-img" alt="" />
+                            <Image
+                              src={getFeaturedImage(relatedPost)}
+                              alt={relatedPost.title.rendered?.replace(/<[^>]*>/g, '') || 'related post'}
+                              width={400}
+                              height={250}
+                              loading="lazy"
+                              className="related-img"
+                              style={{ width: '100%', height: 'auto' }}
+                            />
                           </div>
 
                           {/* CONTENT COL (col-8) */}
@@ -156,7 +247,15 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
             <div className="col-lg-3 col-md-4 col-12">
 
               <div className="section-box ad-box">
-                <img src="/images/add2.png" className="img-fluid" />
+                <Image
+                  src="/images/add2.png"
+                  alt="Advertisement"
+                  width={300}
+                  height={600}
+                  loading="lazy"
+                  className="img-fluid"
+                  style={{ width: '100%', height: 'auto' }}
+                />
               </div>
 
             </div>

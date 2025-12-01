@@ -1,6 +1,7 @@
 "use client"
 import "../style/home.css"
 import Link from 'next/link';
+import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
@@ -138,7 +139,15 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
                     <div class="col-lg-8 col-md-12 col-12">
                       <Link href={getPostUrl(results[0])}>
                         <div class="news-image">
-                          <img src={getFeaturedImage(results[0])} class="img-fluid" alt={results[0].title.rendered} />
+                          <Image
+                            src={getFeaturedImage(results[0])}
+                            alt={results[0].title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                            width={800}
+                            height={500}
+                            priority
+                            className="img-fluid"
+                            style={{ width: '100%', height: 'auto' }}
+                          />
                         </div>
 
                         <h3 class="news-title" dangerouslySetInnerHTML={{ __html: results[0].title.rendered }} />
@@ -178,9 +187,15 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
 
             <div class="col-lg-3 col-md-4 col-12">
               <div class="section-box ad-box">
-
-                <img src="images/add.png" class="img-fluid" />
-
+                <Image
+                  src="/images/add.png"
+                  alt="Advertisement"
+                  width={300}
+                  height={600}
+                  loading="lazy"
+                  className="img-fluid"
+                  style={{ width: '100%', height: 'auto' }}
+                />
               </div>
             </div>
 
@@ -204,7 +219,15 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
                   <Link key={post.id} href={getPostUrl(post)}>
                     <div class="news-row">
                       <div class="news-thumb">
-                        <img src={getFeaturedImage(post)} alt="thumb" class="img-fluid" />
+                        <Image
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'national news'}
+                          width={400}
+                          height={250}
+                          loading="lazy"
+                          className="img-fluid"
+                          style={{ width: '100%', height: 'auto' }}
+                        />
                       </div>
                       <div class="news-content">
                         <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
@@ -285,7 +308,15 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
             <Link key={post.id} href={getPostUrl(post)}>
               <div class="news-row">
                 <div class="news-thumb">
-                  <img src={getFeaturedImage(post)} alt="thumb" class="img-fluid" />
+                  <Image
+                    src={getFeaturedImage(post)}
+                    alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'international news'}
+                    width={400}
+                    height={250}
+                    loading="lazy"
+                    className="img-fluid"
+                    style={{ width: '100%', height: 'auto' }}
+                  />
                 </div>
                 <div class="news-content">
                   <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
@@ -303,11 +334,17 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
 
 
       <div class="col-lg-3 col-md-4 col-12">
-
        <div class="section-box ad-box">
-        <img src="images/add2.png" class="img-fluid"/>
+        <Image
+          src="/images/add2.png"
+          alt="Advertisement"
+          width={300}
+          height={600}
+          loading="lazy"
+          className="img-fluid"
+          style={{ width: '100%', height: 'auto' }}
+        />
        </div>
-
       </div>
 
     </div>

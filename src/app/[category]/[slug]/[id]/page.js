@@ -3,25 +3,65 @@ import { CONFIG } from "@util/config";
 import generateMetadatas from "@util/metadata";
 
 export async function generateMetadata({ params }) {
-   const { slug,page } = await params;
+  const { category, slug, id } = await params;
+  const postId = id.replace(".html", "");
 
+  try {
+    const apiUrl = `${CONFIG.API_URL}posts/${postId}?_embed`;
+    const res = await fetch(apiUrl, { next: { revalidate: 30 } });
 
-  const imageUrl =  "";
+    if (!res.ok) {
+      return generateMetadatas({
+        title: `Article Not Found | MediaEye News`,
+        desc: `The requested article could not be found.`,
+        keywords: `news, media eye news`,
+        url: `https://www.mediaeyenews.com/${category}/${slug}/${id}`,
+        img: '',
+      });
+    }
 
-  /* console.log("metattata",{
-    title: `${slug} News – Latest Updates & Breaking Stories | MediaEye News`,
-    desc:`Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
-    keywords: `Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
-    url:`https://www.mediaeyenews.com/${slug}`,
-    img: imageUrl,
-  }) */
-  return generateMetadatas({
-   title: `${slug} News – Latest Updates & Breaking Stories | MediaEye News`,
-    desc:`Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
-    keywords: `Get the latest {{slug} news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.`,
-    url:`https://www.mediaeyenews.com/${slug}`,
-    img: imageUrl,
-  });
+    const post = await res.json();
+
+    // Get featured image
+    const imageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
+
+    // Get clean title and excerpt
+    const cleanTitle = post.title.rendered?.replace(/<[^>]*>/g, '') || 'Article';
+    const cleanExcerpt = post.excerpt?.rendered?.replace(/<[^>]*>/g, '').substring(0, 160) || '';
+
+    // Get category name
+    const categoryName = post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News';
+
+    // Get author name
+    const authorName = post._embedded?.author?.[0]?.name || 'MediaEye News';
+
+    // Format date
+    const publishedDate = post.date || new Date().toISOString();
+    const modifiedDate = post.modified || publishedDate;
+
+    return generateMetadatas({
+      title: `${cleanTitle} | ${categoryName} | MediaEye News`,
+      desc: cleanExcerpt || `Read the latest article on ${categoryName} at MediaEye News.`,
+      keywords: `${categoryName}, ${cleanTitle}, news, breaking news, latest news`,
+      url: `https://www.mediaeyenews.com/${category}/${slug}/${id}`,
+      img: imageUrl,
+      article: {
+        publishedTime: publishedDate,
+        modifiedTime: modifiedDate,
+        author: authorName,
+        section: categoryName,
+      }
+    });
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return generateMetadatas({
+      title: `Article | MediaEye News`,
+      desc: `Read the latest news and updates at MediaEye News.`,
+      keywords: `news, media eye news`,
+      url: `https://www.mediaeyenews.com/${category}/${slug}/${id}`,
+      img: '',
+    });
+  }
 }
 export default  async function CategoryPage({ params }) {
 /*   const {category, slug,page } = await params;

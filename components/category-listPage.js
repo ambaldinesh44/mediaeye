@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const CategoryListPage = ({ posts = [] }) => {
   // Helper function to get post URL
@@ -33,7 +34,15 @@ export const CategoryListPage = ({ posts = [] }) => {
         <Link key={post.id} href={getPostUrl(post)}>
           <div className="news-row article-big">
             <div className="news-thumb">
-              <img src={getFeaturedImage(post)} alt="thumb" className="img-fluid" />
+              <Image
+                src={getFeaturedImage(post)}
+                alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news article'}
+                width={400}
+                height={250}
+                loading="lazy"
+                className="img-fluid"
+                style={{ width: '100%', height: 'auto' }}
+              />
             </div>
             <div className="news-content">
               <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />

@@ -13,12 +13,35 @@ export const metadata = {
   title: "Media Eye News - Latest News & Updates",
   description: "Get the latest news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.",
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: '/favicon.ico',
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://www.mediaeyenews.com',
+    siteName: 'MediaEye News',
+    title: 'Media Eye News - Latest News & Updates',
+    description: 'Get the latest news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Media Eye News - Latest News & Updates',
+    description: 'Get the latest news from around the world. Stay informed with breaking stories, analysis, and insights at MediaEye News.',
+    site: '@mediaeyenews',
+  },
+  verification: {
+    google: 'your-google-verification-code',
   },
 };
 
