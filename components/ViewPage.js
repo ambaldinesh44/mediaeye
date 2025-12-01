@@ -40,6 +40,18 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
   const cleanTitle = post.title.rendered?.replace(/<[^>]*>/g, '') || '';
   const cleanExcerpt = post.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '';
 
+  // Clean content by removing empty paragraph tags
+  const cleanContent = (content) => {
+    if (!content) return '';
+    return content
+      .replace(/<p>&nbsp;<\/p>/gi, '') // Remove <p>&nbsp;</p>
+      .replace(/<p>\s*<\/p>/gi, '') // Remove empty <p></p>
+      .replace(/(<p>&nbsp;<\/p>\s*){2,}/gi, '') // Remove multiple consecutive empty paragraphs
+      .trim();
+  };
+
+  const cleanedPostContent = cleanContent(post.content.rendered);
+
   // JSON-LD structured data for article
   const articleStructuredData = {
     "@context": "https://schema.org",
@@ -159,7 +171,7 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
                     />
                   </div>
 
-                  <div dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+                  <div dangerouslySetInnerHTML={{ __html: cleanedPostContent }} />
 
                   <div className="py-4">
 
