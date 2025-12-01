@@ -45,7 +45,12 @@ export const SwiperCarousel = ({ posts }) => {
         spaceBetween={0}
         slidesPerView={1}
         navigation
-        pagination={{ clickable: true }}
+        pagination={{
+          clickable: true,
+          el: '.slider-dots',
+          bulletClass: 'swiper-pagination-bullet custom-bullet',
+          bulletActiveClass: 'swiper-pagination-bullet-active active'
+        }}
         autoplay={{
           delay: 5000,
           disableOnInteraction: false,
@@ -76,6 +81,10 @@ export const SwiperCarousel = ({ posts }) => {
         ))}
       </Swiper>
 
+          <div className="slider-dots">
+        </div>
+
+
       <style jsx global>{`
         .featured-swiper {
           width: 100%;
@@ -86,13 +95,7 @@ export const SwiperCarousel = ({ posts }) => {
           color: white !important;
         }
 
-        .swiper-pagination-bullet {
-          background: white !important;
-        }
-
-        .swiper-pagination-bullet-active {
-          background: #dc3545 !important;
-        }
+     
       `}</style>
     </>
   );

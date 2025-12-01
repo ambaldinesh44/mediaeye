@@ -146,6 +146,32 @@ console.log("widget",widgetAreas); */
         }
       })
     );
+
+    // Fetch latest 10 posts from all categories
+    try {
+      const latestRes = await fetch(
+        `${CONFIG.API_URL}posts?categories=${categories.join(',')}&orderby=date&order=desc&per_page=10&_embed`,
+        { cache: "no-store" }
+      );
+
+      if (!latestRes.ok) {
+        console.error(`Failed to fetch latest posts: ${latestRes.status} ${latestRes.statusText}`);
+        results = [];
+      } else {
+        const contentType = latestRes.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error(`Invalid content type for latest posts: ${contentType}`);
+          const text = await latestRes.text();
+          console.error('Response body:', text.substring(0, 200));
+          results = [];
+        } else {
+          results = await latestRes.json();
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching latest posts:', error);
+      results = [];
+    }
   }
 
 //
