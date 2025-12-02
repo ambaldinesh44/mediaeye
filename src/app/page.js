@@ -1,5 +1,6 @@
 
 import { HomePage } from "@components/HomePage";
+import { SearchListPage } from "@components/SearchListPage";
 import { CONFIG } from "@util/config";
 
 export default async function WelcomePage({searchParams }) {
@@ -13,7 +14,7 @@ const widgetAreas = await res.json();
 console.log("widget",widgetAreas); */
 
   const params = await searchParams;
-  const term = params?.s || ""; // e.g. ?s=finesh
+  const term = params?.s || params?.search || ""; // e.g. ?s=finesh or ?search=finesh
 
   let results = [];
   let topCategoeyNews = [];
@@ -189,12 +190,15 @@ console.log("widget",widgetAreas); */
 
   return (
     <>
-  <pre style={{display:"none"}}>
-  
-  {JSON.stringify(results)}
-</pre>
+      <pre style={{display:"none"}}>
+        {JSON.stringify(results)}
+      </pre>
 
-   <HomePage term={term} results={results} categoryNews={topCategoeyNews}></HomePage>
+      {term ? (
+        <SearchListPage posts={results} searchTerm={term} />
+      ) : (
+        <HomePage term={term} results={results} categoryNews={topCategoeyNews} />
+      )}
     </>
-  )   
+  )
 }
