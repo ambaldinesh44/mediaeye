@@ -11,7 +11,7 @@ const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.
   ssr: false,
 });
 
-export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
+export const HomePage = ({ term = '', results = [], categoryNews = [], top_news = [] }) => {
 
   // Get featured posts for carousel (first category, first 5 posts)
   const featuredPosts = categoryNews?.[0]?.posts?.slice(0, 5) || [];
@@ -29,8 +29,8 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
   // Get more news items for sidebar (different from latest news, limited to 4)
   const moreNewsPosts = categoryNews?.flatMap(cat => cat.posts || []).slice(10, 14) || [];
 
-  // Get news rotator items (first 3 posts from results)
-  const newsRotatorItems = results || [];
+  // Get news rotator items (use top_news for marquee)
+  const newsRotatorItems = top_news || [];
 
   // Helper function to get post URL
   const getPostUrl = (post) => {
@@ -65,6 +65,11 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
                     <img src="/images/newsicon.svg" className="img-fluid" />
                   </div>
                   <div className="news-box">
+                     {newsRotatorItems.map((post) => (
+                      <>
+                       {stripHtml(post.title.rendered)}
+                      </>
+ ))}        
                     <Marquee speed={50} gradient={false} pauseOnHover={true}>
                       {newsRotatorItems.map((post) => (
                         <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">

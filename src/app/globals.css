@@ -1,5 +1,17 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background-color: #f9f8f8; }
+a {
+  text-decoration: none;
+  color: inherit;       /* inherit color from parent (useful in components) */
+  cursor: pointer;
+}
+
+/* keep keyboard focus visible and accessible */
+a:focus,
+a:focus-visible {
+  outline:none; /* or use your custom focus color */
+  outline-offset: 2px;
+}
 .top-navbar { font-family: "Inria Sans", sans-serif; position: sticky; top: 0; z-index: 1000; background: #ffffff; border-bottom: 1px solid #e5e5e5;     /* background-color: #ffffff; 
 border-bottom: 1px solid #e0e0e0; 
 padding: 0; position: fixed; top: 0;

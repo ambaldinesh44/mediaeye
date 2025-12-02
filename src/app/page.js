@@ -18,6 +18,7 @@ console.log("widget",widgetAreas); */
 
   let results = [];
   let topCategoeyNews = [];
+  let top_news = [];
 
   // If search term exists, fetch search results
   if (term) {
@@ -46,6 +47,30 @@ console.log("widget",widgetAreas); */
       results = [];
     }
   } else {
+    // Fetch category 72 top 10 latest posts
+    try {
+      const cat72Res = await fetch(
+        `${CONFIG.API_URL}posts?categories=72&orderby=date&order=desc&per_page=10&_embed`,
+        { cache: "no-store" }
+      );
+
+      if (!cat72Res.ok) {
+        console.error(`Failed to fetch category 72: ${cat72Res.status} ${cat72Res.statusText}`);
+        top_news = [];
+      } else {
+        const contentType = cat72Res.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error(`Invalid content type for category 72: ${contentType}`);
+          top_news = [];
+        } else {
+          top_news = await cat72Res.json();
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching category 72 posts:', error);
+      top_news = [];
+    }
+
     // Otherwise, fetch category news
     const categories_name = [
       'business',
@@ -186,7 +211,7 @@ console.log("widget",widgetAreas); */
 
 // Fetch results
 //const topCategoeyNews = await fetch(apiUrl);
-
+console.log("top_news",top_news)
 
   return (
     <>
@@ -197,7 +222,7 @@ console.log("widget",widgetAreas); */
       {term ? (
         <SearchListPage posts={results} searchTerm={term} />
       ) : (
-        <HomePage term={term} results={results} categoryNews={topCategoeyNews} />
+        <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} />
       )}
     </>
   )
