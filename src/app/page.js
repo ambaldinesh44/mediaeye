@@ -72,36 +72,37 @@ console.log("widget",widgetAreas); */
     }
 
     // Otherwise, fetch category news
-    const categories_name = [
-      'business',
-      'national',
-      'crime',
-      'international',
-      'personality',
-      'politics',
-      'hot-news',
-      'cricket',
-    ];
+
     const cat = {
-      12: "business",
+      10797:"hot-news",
+      6: "national",
+        8: "international",
+        40:"blog",
+     /*  12: "business",
+      1043:"special-news",
       6: "national",
       47: "crime",
       8: "international",
       16: "personality",
       10: "politics",
       10797: "hot-news",
-      2377: "cricket"
+      2377: "cricket" */
     };
     const categories = [
-      12,
+      10797,
+      6,8,40
+
+    /*   12,
+      1043,
       6,
       47,
       8,
       16,
       10,
       10797,
-      2377,
+      2377, */
     ];
+
     /* const ress = await fetch(
       `${CONFIG.API_URL}posts?categories=${categories.join(',')}&orderby=date&order=desc&per_page=10&_embed`
     );
@@ -176,7 +177,7 @@ console.log("widget",widgetAreas); */
     // Fetch latest 10 posts from all categories
     try {
       const latestRes = await fetch(
-        `${CONFIG.API_URL}posts?categories=${categories.join(',')}&orderby=date&order=desc&per_page=10&_embed`,
+        `${CONFIG.API_URL}posts?orderby=date&order=desc&per_page=10&_embed`,
         { cache: "no-store" }
       );
 
@@ -216,7 +217,7 @@ console.log("top_news",top_news)
   return (
     <>
       <pre style={{display:"none"}}>
-        {JSON.stringify(results)}
+        {JSON.stringify(topCategoeyNews)}
       </pre>
 
       {term ? (

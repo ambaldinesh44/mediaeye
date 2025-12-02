@@ -56,32 +56,32 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
 
   return (
     <>
-    
-          <div className="news-rotator-wrapper">
-            <div className="news-rotator">
-              <div className="container">
-                <div className="news-rotator-container">
-                  <div className="news-icon">
-                    <img src="/images/newsicon.svg" className="img-fluid" />
-                  </div>
-                  <div className="news-box">
-                     {newsRotatorItems.map((post) => (
-                      <>
-                       {stripHtml(post.title.rendered)}
-                      </>
- ))}        
-                    <Marquee speed={50} gradient={false} pauseOnHover={true}>
-                      {newsRotatorItems.map((post) => (
-                        <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
-                          {formatTime(post.date)} - {stripHtml(post.title.rendered)}
-                        </Link>
-                      ))}
-                    </Marquee>
-                  </div>
-                </div>
+
+      <div className="news-rotator-wrapper">
+        <div className="news-rotator">
+          <div className="container">
+            <div className="news-rotator-container">
+              <div className="news-icon">
+                <img src="/images/newsicon.svg" className="img-fluid" />
+              </div>
+              <div className="news-box">
+                {newsRotatorItems.map((post) => (
+                  <>
+                    {stripHtml(post.title.rendered)}
+                  </>
+                ))}
+                <Marquee speed={50} gradient={false} pauseOnHover={true}>
+                  {newsRotatorItems.map((post) => (
+                    <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
+                      {formatTime(post.date)} - {stripHtml(post.title.rendered)}
+                    </Link>
+                  ))}
+                </Marquee>
               </div>
             </div>
           </div>
+        </div>
+      </div>
       <div class="main-wrapper">
 
 
@@ -176,7 +176,7 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
                             height={500}
                             priority
                             className="img-fluid"
-                            style={{ width: '100%',height:500 }}
+                            style={{ width: '100%', height: 500 }}
                           />
                         </div>
 
@@ -323,62 +323,260 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
         </div>
 
 
-   <div class="container-custom">
-    <div class="row g-3">
+        <div class="container-custom">
+          <div class="row g-3">
+
+
+            <div class="col-lg-9 col-md-8 col-12">
+              <div class="section-box">
+                <div class="section-title">
+                  <h2>International</h2>
+                  <Link href="/category/international">View All →</Link>
+                </div>
+
+                {categoryNews.find(cat => cat.categoryName === 'international')?.posts?.slice(0, 4).map((post) => (
+                  <Link key={post.id} href={getPostUrl(post)}>
+                    <div class="news-row">
+                      <div class="news-thumb">
+                        <Image
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'international news'}
+                          width={400}
+                          height={250}
+                          loading="lazy"
+                          className="img-fluid"
+                          style={{ width: '100%', height: 'auto' }}
+                        />
+                      </div>
+                      <div class="news-content">
+                        <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                        <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
+                        <div class="news-meta">
+                          <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+
+              </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 col-12">
+              <div class="section-box ad-box">
+                <Image
+                  src="/images/add2.png"
+                  alt="Advertisement"
+                  width={300}
+                  height={600}
+                  loading="lazy"
+                  className="img-fluid"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+        <div class="container-custom ">
+          <div class="row g-3">
 
  
-      <div class="col-lg-9 col-md-8 col-12">
-        <div class="section-box">
-          <div class="section-title">
-            <h2>International</h2>
-            <Link href="/category/international">View All →</Link>
-          </div>
+            <div class="col-lg-9 col-md-12 col-12">
+              <div class="section-box">
+                <div class="section-title">
+                  <h2>Special News</h2>
+                  <a href="#">View All →</a>
+                </div>
 
-          {categoryNews.find(cat => cat.categoryName === 'international')?.posts?.slice(0, 4).map((post) => (
-            <Link key={post.id} href={getPostUrl(post)}>
-              <div class="news-row">
-                <div class="news-thumb">
+
+               <div class="news-card-grid">
+
+                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 3).map((post) => (
+                    <Link key={post.id} href={getPostUrl(post)}>
+                      <div class="news-card">
+                        <Image
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'special news'}
+                          width={400}
+                          height={250}
+                          loading="lazy"
+                          className="img-fluid"
+                          style={{ width: '100%', height: 'auto' }}
+                        />
+                        <div class="news-card-content">
+                          <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                          <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
+                          <div class="news-meta">
+                            <span>
+                              <i class="bi bi-person user-icon"></i> {post._embedded?.author?.[0]?.name || 'Admin'}
+                            </span>
+                            <span><i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+
+                </div>
+
+
+                <div class="match-list">
+
+                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(3).map((post, index) => (
+                    <Link key={post.id} href={getPostUrl(post)}>
+                      <div class="match-item">
+                        <div class="match-left">
+                          <Image
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                          />
+                          <div class="match-text">
+                            <div class="match-meta">
+                              <span class="match-tag">NEWS {index + 1}</span>
+                              <small>{getTimeAgo(post.date)}</small>
+                            </div>
+                            <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                            <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
+                          </div>
+                        </div>
+                        <div class="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
+                      </div>
+                    </Link>
+                  ))}
+
+                </div> 
+              </div>
+            </div>
+
+            
+            <div class="col-lg-3 col-md-4 col-12 d-none d-lg-block ">
+              <div class="sponsored-wrapper">
+
+                
+                <div class="sponsored-card">
+                  <div class="sponsored-title">SPONSORED</div>
+
+                  <img src="images/sponsered2.png" class=" img-fluid sponsored-img"/>
+
+                    <div class="sponsored-content">
+                      <h6>Smart Investment Made Simple</h6>
+                      <p>Start building wealth with AI-powered portfolio management.</p>
+                      <span>by WealthTech</span>
+
+                      <button class="sponsored-btn">Learn More</button>
+                    </div>
+                </div>
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+
+<div class="container-custom">
+  <div class="row g-3">
+
+    <div class="col-lg-9 col-md-8 col-12">
+      <div class="section-box">
+
+        <div class="section-title">
+          <h2>Blog</h2>
+          <a href="#">View All →</a>
+        </div>
+
+        <div class="row g-3">
+
+          {/* MAIN BLOG - First Item from blog category */}
+          {categoryNews.find(cat => cat.categoryName === 'blog')?.posts?.[0] && (
+            <div class="col-lg-8 col-md-12 col-12">
+              <Link href={getPostUrl(categoryNews.find(cat => cat.categoryName === 'blog').posts[0])}>
+                <div class="news-image">
                   <Image
-                    src={getFeaturedImage(post)}
-                    alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'international news'}
-                    width={400}
-                    height={250}
+                    src={getFeaturedImage(categoryNews.find(cat => cat.categoryName === 'blog').posts[0])}
+                    alt={categoryNews.find(cat => cat.categoryName === 'blog').posts[0].title.rendered?.replace(/<[^>]*>/g, '') || 'blog'}
+                    width={800}
+                    height={500}
                     loading="lazy"
                     className="img-fluid"
                     style={{ width: '100%', height: 'auto' }}
                   />
                 </div>
-                <div class="news-content">
-                  <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                  <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
-                  <div class="news-meta">
-                    <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
-                  </div>
+
+                <h3 class="news-title" dangerouslySetInnerHTML={{ __html: categoryNews.find(cat => cat.categoryName === 'blog').posts[0].title.rendered }} />
+
+                <div class="news-meta">
+                  By {categoryNews.find(cat => cat.categoryName === 'blog').posts[0]._embedded?.author?.[0]?.name || 'Admin'} • {getTimeAgo(categoryNews.find(cat => cat.categoryName === 'blog').posts[0].date)}
                 </div>
+
+                <p class="news-desc" dangerouslySetInnerHTML={{ __html: categoryNews.find(cat => cat.categoryName === 'blog').posts[0].excerpt?.rendered || '' }} />
+              </Link>
+            </div>
+          )}
+
+
+          <div class="col-lg-4 col-md-12 col-12">
+
+            <div class="section-box right">
+
+              <div class="section-title">
+                <h3><img src="images/trending-icon.svg" class="img-fluid me-1" width="16px" />More</h3>
               </div>
-            </Link>
-          ))}
+
+              <div class="side-list">
+
+                {categoryNews.find(cat => cat.categoryName === 'blog')?.posts?.slice(1, 4).map((post) => (
+                  <Link key={post.id} href={getPostUrl(post)}>
+                    <div class="list-item">
+                      <Image
+                        src={getFeaturedImage(post)}
+                        alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'blog'}
+                        width={100}
+                        height={100}
+                        loading="lazy"
+                        style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                      />
+                      <div class="list-item-content">
+                        <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                        <span><i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
 
         </div>
       </div>
-
-
-      <div class="col-lg-3 col-md-4 col-12">
-       <div class="section-box ad-box">
-        <Image
-          src="/images/add2.png"
-          alt="Advertisement"
-          width={300}
-          height={600}
-          loading="lazy"
-          className="img-fluid"
-          style={{ width: '100%', height: 'auto' }}
-        />
-       </div>
-      </div>
-
     </div>
+
+    <div class="col-lg-3 col-md-4 col-12">
+      <div class="section-box ad-box">
+        
+      <img src="images/add.png" class="img-fluid"/>
+
+      </div>
+    </div>
+
   </div>
+</div>
+
+
 
 
       </div>

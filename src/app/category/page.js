@@ -6,21 +6,21 @@ export default  async function CategoryPage({ params }) {
   const { slug } = await params;
 console.log("ddddddddddddd",slug)
     const res = await fetch(
-      `${CONFIG.API_URL}categories?per_page=100&_embed`,
+      `${CONFIG.API_URL}categories?page=1&per_page=100&_embed`,
     { next: { revalidate: 60 } }
     );
-   const posts = await res.json(); 
+   const posts = await res.json();
 
-     const totalCategories = res.headers.get("X-WP-Total");
+     const totalCategories = parseInt(res.headers.get("X-WP-Total") || "0", 10);
      console.log("totalCategories",totalCategories)
-  console.log("poststs",posts)
+ // console.log("poststs",posts)
   return (
     <>
         <pre style={{display:"none"}}>
   {JSON.stringify(posts)}
 </pre>
-   
-    <CategoryList categories={posts}></CategoryList> 
+
+    <CategoryList categories={posts} totalCount={totalCategories}></CategoryList>
     </>
   );
 }
