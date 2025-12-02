@@ -27,10 +27,18 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
   // Get more news items for sidebar (different from latest news, limited to 4)
   const moreNewsPosts = categoryNews?.flatMap(cat => cat.posts || []).slice(10, 14) || [];
 
+  // Get news rotator items (first 3 posts from results)
+  const newsRotatorItems = results || [];
+
   // Helper function to get post URL
   const getPostUrl = (post) => {
     const categorySlug = post._embedded?.['wp:term']?.[0]?.[0]?.slug || 'news';
     return `/${categorySlug}/${post.slug}/${post.id}.html`;
+  };
+
+  // Helper function to strip HTML tags
+  const stripHtml = (html) => {
+    return html?.replace(/<[^>]*>/g, '') || '';
   };
 
   // Helper function to get featured image
@@ -40,6 +48,29 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
 
   return (
     <>
+    
+          <div className="news-rotator-wrapper">
+            <div className="news-rotator">
+              <div className="container">
+                <div className="news-rotator-container">
+                  <div className="news-icon">
+                    <img src="images/newsicon.svg" className="img-fluid" />
+                  </div>
+                  <div className="news-box">
+                    <div className="marquee-track">
+                      {newsRotatorItems.map((post) => (
+                        <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
+                          {stripHtml(post.title.rendered)}
+                        </Link>
+                      ))}
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       <div class="main-wrapper">
 
 

@@ -132,46 +132,6 @@ export const Header = () => {
             </div>
           </div>
 
-          <div className="news-rotator-wrapper">
-            <div className="news-rotator">
-              <div className="container">
-                <div className="news-rotator-container">
-                  <div className="news-icon">
-                    <img src="images/newsicon.svg" className="img-fluid" />
-                  </div>
-                  <div className="news-box">
-                    <div className="marquee-track">
-                      {/* ORIGINAL ITEMS */}
-                      <div className="news-item">
-                        Huntingdon train stabbing suspects and victims: Are train services suspended?
-                      </div>
-
-                      <div className="news-item">
-                        British Transport Police have increased security across major rail stations.
-                      </div>
-
-                      <div className="news-item">
-                        Commuters advised to check train delays before travel today.
-                      </div>
-
-                      {/* DUPLICATE ITEMS FOR CONTINUOUS LOOP */}
-                      <div className="news-item">
-                        Huntingdon train stabbing suspects and victims: Are train services suspended?
-                      </div>
-
-                      <div className="news-item">
-                        British Transport Police have increased security across major rail stations.
-                      </div>
-
-                      <div className="news-item">
-                        Commuters advised to check train delays before travel today.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </nav>
 
         {/* Mobile Menu Overlay */}
