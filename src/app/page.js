@@ -72,12 +72,14 @@ console.log("widget",widgetAreas); */
     }
 
     // Otherwise, fetch category news
-
+//special News - 72(1043)
     const cat = {
       10797:"hot-news",
       6: "national",
         8: "international",
         40:"blog",
+        1:"top-news",
+     //   72:"special-news"
      /*  12: "business",
       1043:"special-news",
       6: "national",
@@ -90,7 +92,7 @@ console.log("widget",widgetAreas); */
     };
     const categories = [
       10797,
-      6,8,40
+      6,8,40,1
 
     /*   12,
       1043,

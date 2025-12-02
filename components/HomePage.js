@@ -389,19 +389,19 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
             <div class="col-lg-9 col-md-12 col-12">
               <div class="section-box">
                 <div class="section-title">
-                  <h2>Special News</h2>
+                  <h2>Top News</h2>
                   <a href="#">View All →</a>
                 </div>
 
 
                <div class="news-card-grid">
 
-                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 3).map((post) => (
+                  {categoryNews.find(cat => cat.categoryName === 'top-news')?.posts?.slice(0, 3).map((post) => (
                     <Link key={post.id} href={getPostUrl(post)}>
                       <div class="news-card">
                         <Image
                           src={getFeaturedImage(post)}
-                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'special news'}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'top news'}
                           width={400}
                           height={250}
                           loading="lazy"
@@ -427,7 +427,7 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
 
                 <div class="match-list">
 
-                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(3).map((post, index) => (
+                  {categoryNews.find(cat => cat.categoryName === 'top-news')?.posts?.slice(3,6).map((post, index) => (
                     <Link key={post.id} href={getPostUrl(post)}>
                       <div class="match-item">
                         <div class="match-left">
