@@ -63,12 +63,12 @@ export const Header = () => {
                 <li><Link href="/category/business" className={isActive('/category/business') ? 'active' : ''}>Business</Link></li>
                 <li><Link href="/category/stock-market" className={isActive('/category/stock-market') ? 'active' : ''}>Stock Market</Link></li>
                 <li><Link href="/category/sports" className={isActive('/category/sports') ? 'active' : ''}>Sports</Link></li>
-                <li><Link href="/category/crime-law" className={isActive('/category/crime-law') ? 'active' : ''}>Crime & Law</Link></li>
+                <li><Link href="/category/crime" className={isActive('/category/crime') ? 'active' : ''}>Crime & Law</Link></li>
                 <li><Link href="/category/health" className={isActive('/category/health') ? 'active' : ''}>Health</Link></li>
                 <li><Link href="/category/education" className={isActive('/category/education') ? 'active' : ''}>Education</Link></li>
-                <li><Link href="/category/entertainment" className={isActive('/category/entertainment') ? 'active' : ''}>Entertainment</Link></li>
+                <li><Link href="/category/entertaintment" className={isActive('/category/entertaintment') ? 'active' : ''}>Entertainment</Link></li>
                 <li><Link href="/category/lifestyle" className={isActive('/category/lifestyle') ? 'active' : ''}>Lifestyle</Link></li>
-                <li><Link href="/category/environment" className={isActive('/category/environment') ? 'active' : ''}>Environment</Link></li>
+                <li><Link href="/category/environment-climate" className={isActive('/category/environment-climate') ? 'active' : ''}>environment-climate</Link></li>
               </ul>
 
               <div className="nav-right">
@@ -159,12 +159,12 @@ export const Header = () => {
             <li><Link href="/category/business" className={isActive('/category/business') ? 'active' : ''}>Business</Link></li>
             <li><Link href="/category/stock-market" className={isActive('/category/stock-market') ? 'active' : ''}>Stock Market</Link></li>
             <li><Link href="/category/sports" className={isActive('/category/sports') ? 'active' : ''}>Sports</Link></li>
-            <li><Link href="/category/crime-law" className={isActive('/category/crime-law') ? 'active' : ''}>Crime & Law</Link></li>
+            <li><Link href="/category/crime" className={isActive('/category/crime') ? 'active' : ''}>Crime & Law</Link></li>
             <li><Link href="/category/health" className={isActive('/category/health') ? 'active' : ''}>Health</Link></li>
             <li><Link href="/category/education" className={isActive('/category/education') ? 'active' : ''}>Education</Link></li>
-            <li><Link href="/category/entertainment" className={isActive('/category/entertainment') ? 'active' : ''}>Entertainment</Link></li>
+            <li><Link href="/category/entertaintment" className={isActive('/category/entertaintment') ? 'active' : ''}>Entertainment</Link></li>
             <li><Link href="/category/lifestyle" className={isActive('/category/lifestyle') ? 'active' : ''}>Lifestyle</Link></li>
-            <li><Link href="/category/environment" className={isActive('/category/environment') ? 'active' : ''}>Environment</Link></li>
+            <li><Link href="/category/environment-climate" className={isActive('/category/environment-climate') ? 'active' : ''}>Environment</Link></li>
           </ul>
 
           <div className="mobile-live">
