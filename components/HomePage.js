@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
+import Marquee from 'react-fast-marquee';
 import { getTimeAgo } from '../utils/timeUtils';
 
 const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
@@ -64,15 +65,13 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
                     <img src="/images/newsicon.svg" className="img-fluid" />
                   </div>
                   <div className="news-box">
-                    <div className="marquee-track">
+                    <Marquee speed={50} gradient={false} pauseOnHover={true}>
                       {newsRotatorItems.map((post) => (
                         <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
                           {formatTime(post.date)} - {stripHtml(post.title.rendered)}
                         </Link>
                       ))}
-
-
-                    </div>
+                    </Marquee>
                   </div>
                 </div>
               </div>
