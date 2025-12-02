@@ -101,7 +101,7 @@ const post = posts[0];
  */
 
     const { category, slug, id } = await params;
-
+  let topCategoeyNews = [];
   // Remove .html if it exists
   const postId = id.replace(".html", "");
  // console.log(postId);
@@ -174,9 +174,71 @@ const post = posts[0];
     console.error('Error fetching prev/next posts:', error);
   }
 
+
+   const cat = {
+      72:"special-news",
+      1: "top-news",
+     152: "others",
+    };
+    const categories = [
+      72,
+      1,152
+
+    ];
+
+        topCategoeyNews = await Promise.all(
+      categories.map(async (catId) => {
+        try {
+          const res = await fetch(
+            `${CONFIG.API_URL}posts?categories=${catId}&orderby=date&order=desc&per_page=10&_embed`,
+            { cache: "no-store" }
+          );
+
+          // Check if response is ok
+          if (!res.ok) {
+            console.error(`Failed to fetch category ${catId}: ${res.status} ${res.statusText}`);
+            return {
+              categoryId: catId,
+              categoryName: cat[catId],
+              posts: [],
+            };
+          }
+
+          // Check content type before parsing JSON
+          const contentType = res.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            console.error(`Invalid content type for category ${catId}: ${contentType}`);
+            const text = await res.text();
+            console.error('Response body:', text.substring(0, 200));
+            return {
+              categoryId: catId,
+              categoryName: cat[catId],
+              posts: [],
+            };
+          }
+
+          const posts = await res.json();
+
+          return {
+            categoryId: catId,
+            categoryName: cat[catId],
+            posts,
+          };
+        } catch (error) {
+          console.error(`Error fetching category ${catId}:`, error);
+          return {
+            categoryId: catId,
+            categoryName: cat[catId],
+            posts: [],
+          };
+        }
+      })
+    );
+
+    console.log("topCategoeyNewstopCategoeyNews",topCategoeyNews)
   return (
       <>
-      <ViewPage post={post} url={fullUrl} relatedPosts={relatedPosts} prevPost={prevPost} nextPost={nextPost}/>
+      <ViewPage post={post} url={fullUrl} topCategoeyNews={topCategoeyNews} relatedPosts={relatedPosts} prevPost={prevPost} nextPost={nextPost}/>
 
 {/* <div>
       <h1>{post.title.rendered}</h1>

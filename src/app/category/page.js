@@ -13,6 +13,10 @@ console.log("ddddddddddddd",slug)
 
      const totalCategories = parseInt(res.headers.get("X-WP-Total") || "0", 10);
      console.log("totalCategories",totalCategories)
+
+
+     
+
  // console.log("poststs",posts)
   return (
     <>

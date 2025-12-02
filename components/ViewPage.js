@@ -4,10 +4,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Comments } from './Comments';
 import { SocialShare } from './SocialShare';
-import { RelatedPosts } from './RelatedPosts';
 import '../style/home.css';
-
-export const ViewPage = ({ post, url, relatedPosts, prevPost, nextPost }) => {
+import { getTimeAgo } from '../utils/timeUtils';
+export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, nextPost }) => {
 
   // Helper function to get featured image
   const getFeaturedImage = (post) => {
@@ -19,6 +18,9 @@ export const ViewPage = ({ post, url, relatedPosts, prevPost, nextPost }) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
+
+  // Helper function to get time ago
+
 
   // Helper function to get post URL
   const getPostUrl = (post) => {
@@ -286,18 +288,146 @@ export const ViewPage = ({ post, url, relatedPosts, prevPost, nextPost }) => {
             {/* RIGHT */}
             <div className="col-lg-3 col-md-4 col-12">
 
-              <div className="section-box ad-box">
-                <Image
-                  src="/images/add2.png"
-                  alt="Advertisement"
-                  width={300}
-                  height={600}
-                  loading="lazy"
-                  className="img-fluid"
-                  style={{ width: '100%', height: 'auto' }}
-                />
-              </div>
+              <div className="section-box ad-box" style={{ position: 'sticky', top: '20px' }}>
+                {/* Advertisement Banner 1 */}
+              
 
+                {/* Advertisement Banner 2 */}
+                <div style={{ marginBottom: '20px' }}>
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="https://www.mediaeyenews.com/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-18-at-192.34.33-300x208.jpeg"
+                      alt="Advertisement"
+                      width={300}
+                      height={208}
+                      loading="lazy"
+                      className="img-fluid"
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    />
+                  </a>
+                </div>
+
+  <div style={{ marginBottom: '20px' }}>
+                  <a href="#" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="https://www.mediaeyenews.com/wp-content/uploads/2024/04/WhatsApp-Image-2024-04-11-at-3.20.58-PM-300x300.jpeg"
+                      alt="Advertisement"
+                      width={300}
+                      height={300}
+                      loading="lazy"
+                      className="img-fluid"
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    />
+                  </a>
+                </div>
+              {topCategoeyNews?.find(cat => cat.categoryName === 'special-news')?.posts?.length > 0 && (
+                <div className="section-box11" style={{ marginTop: '20px' }}>
+                  <div className="section-title">
+                    <h3>Special News</h3>
+                  </div>
+                  <div className="match-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 6).map((post, index) => (
+                      <Link key={post.id} href={getPostUrl(post)}>
+                        <div className="match-item">
+                          <div className="match-left">
+                            <Image
+                              src={getFeaturedImage(post)}
+                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                              width={80}
+                              height={80}
+                              loading="lazy"
+                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                            />
+                            <div className="match-text">
+                              <div className="match-meta">
+                                <span className="match-tag">NEWS {index + 1}</span>
+                                <small>{getTimeAgo(post.date)}</small>
+                              </div>
+                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
+                            </div>
+                          </div>
+                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* TOP NEWS SECTION */}
+              {topCategoeyNews?.find(cat => cat.categoryName === 'top-news')?.posts?.length > 0 && (
+                <div className="section-box" style={{ marginTop: '20px' }}>
+                  <div className="section-title">
+                    <h3>Top News</h3>
+                  </div>
+                  <div className="match-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'top-news')?.posts?.slice(0, 6).map((post, index) => (
+                      <Link key={post.id} href={getPostUrl(post)}>
+                        <div className="match-item">
+                          <div className="match-left">
+                            <Image
+                              src={getFeaturedImage(post)}
+                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                              width={80}
+                              height={80}
+                              loading="lazy"
+                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                            />
+                            <div className="match-text">
+                              <div className="match-meta">
+                                <span className="match-tag">NEWS {index + 1}</span>
+                                <small>{getTimeAgo(post.date)}</small>
+                              </div>
+                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
+                            </div>
+                          </div>
+                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* OTHERS SECTION */}
+              {topCategoeyNews?.find(cat => cat.categoryName === 'others')?.posts?.length > 0 && (
+                <div className="section-box" style={{ marginTop: '20px' }}>
+                  <div className="section-title">
+                    <h3>Others</h3>
+                  </div>
+                  <div className="match-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'others')?.posts?.slice(0, 6).map((post, index) => (
+                      <Link key={post.id} href={getPostUrl(post)}>
+                        <div className="match-item">
+                          <div className="match-left">
+                            <Image
+                              src={getFeaturedImage(post)}
+                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                              width={80}
+                              height={80}
+                              loading="lazy"
+                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                            />
+                            <div className="match-text">
+                              <div className="match-meta">
+                                <span className="match-tag">NEWS {index + 1}</span>
+                                <small>{getTimeAgo(post.date)}</small>
+                              </div>
+                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
+                            </div>
+                          </div>
+                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  
+                </div>
+              )}
+</div>
             </div>
 
           </div>
