@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -9,6 +9,7 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
+  const pathname = usePathname();
 
   const openMenu = () => setIsMobileMenuOpen(true);
   const closeMenu = () => setIsMobileMenuOpen(false);
@@ -23,6 +24,14 @@ export const Header = () => {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  // Helper function to check if a link is active
+  const isActive = (path) => {
+    if (path === '/') {
+      return pathname === '/';
+    }
+    return pathname?.startsWith(path);
   };
 
   return (
@@ -49,17 +58,17 @@ export const Header = () => {
             {/* Desktop Navigation */}
             <div className="desktop-nav">
               <ul className="nav-links">
-                <li><Link href="/" className="active">Home</Link></li>
-                <li><Link href="/category/politics">Politics</Link></li>
-                <li><Link href="/category/business">Business</Link></li>
-                <li><Link href="/category/stock-market">Stock Market</Link></li>
-                <li><Link href="/category/sports">Sports</Link></li>
-                <li><Link href="/category/crime-law">Crime & Law</Link></li>
-                <li><Link href="/category/health">Health</Link></li>
-                <li><Link href="/category/education">Education</Link></li>
-                <li><Link href="/category/entertainment">Entertainment</Link></li>
-                <li><Link href="/category/lifestyle">Lifestyle</Link></li>
-                <li><Link href="/category/environment">Environment</Link></li>
+                <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
+                <li><Link href="/category/politics" className={isActive('/category/politics') ? 'active' : ''}>Politics</Link></li>
+                <li><Link href="/category/business" className={isActive('/category/business') ? 'active' : ''}>Business</Link></li>
+                <li><Link href="/category/stock-market" className={isActive('/category/stock-market') ? 'active' : ''}>Stock Market</Link></li>
+                <li><Link href="/category/sports" className={isActive('/category/sports') ? 'active' : ''}>Sports</Link></li>
+                <li><Link href="/category/crime-law" className={isActive('/category/crime-law') ? 'active' : ''}>Crime & Law</Link></li>
+                <li><Link href="/category/health" className={isActive('/category/health') ? 'active' : ''}>Health</Link></li>
+                <li><Link href="/category/education" className={isActive('/category/education') ? 'active' : ''}>Education</Link></li>
+                <li><Link href="/category/entertainment" className={isActive('/category/entertainment') ? 'active' : ''}>Entertainment</Link></li>
+                <li><Link href="/category/lifestyle" className={isActive('/category/lifestyle') ? 'active' : ''}>Lifestyle</Link></li>
+                <li><Link href="/category/environment" className={isActive('/category/environment') ? 'active' : ''}>Environment</Link></li>
               </ul>
 
               <div className="nav-right">
@@ -145,17 +154,17 @@ export const Header = () => {
           </div>
 
           <ul className="mobile-nav-links">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/category/politics">Politics</Link></li>
-            <li><Link href="/category/business">Business</Link></li>
-            <li><Link href="/category/stock-market">Stock Market</Link></li>
-            <li><Link href="/category/sports">Sports</Link></li>
-            <li><Link href="/category/crime-law">Crime & Law</Link></li>
-            <li><Link href="/category/health">Health</Link></li>
-            <li><Link href="/category/education">Education</Link></li>
-            <li><Link href="/category/entertainment">Entertainment</Link></li>
-            <li><Link href="/category/lifestyle">Lifestyle</Link></li>
-            <li><Link href="/category/environment">Environment</Link></li>
+            <li><Link href="/" className={isActive('/') ? 'active' : ''}>Home</Link></li>
+            <li><Link href="/category/politics" className={isActive('/category/politics') ? 'active' : ''}>Politics</Link></li>
+            <li><Link href="/category/business" className={isActive('/category/business') ? 'active' : ''}>Business</Link></li>
+            <li><Link href="/category/stock-market" className={isActive('/category/stock-market') ? 'active' : ''}>Stock Market</Link></li>
+            <li><Link href="/category/sports" className={isActive('/category/sports') ? 'active' : ''}>Sports</Link></li>
+            <li><Link href="/category/crime-law" className={isActive('/category/crime-law') ? 'active' : ''}>Crime & Law</Link></li>
+            <li><Link href="/category/health" className={isActive('/category/health') ? 'active' : ''}>Health</Link></li>
+            <li><Link href="/category/education" className={isActive('/category/education') ? 'active' : ''}>Education</Link></li>
+            <li><Link href="/category/entertainment" className={isActive('/category/entertainment') ? 'active' : ''}>Entertainment</Link></li>
+            <li><Link href="/category/lifestyle" className={isActive('/category/lifestyle') ? 'active' : ''}>Lifestyle</Link></li>
+            <li><Link href="/category/environment" className={isActive('/category/environment') ? 'active' : ''}>Environment</Link></li>
           </ul>
 
           <div className="mobile-live">
