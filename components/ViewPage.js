@@ -7,7 +7,7 @@ import { SocialShare } from './SocialShare';
 import { RelatedPosts } from './RelatedPosts';
 import '../style/home.css';
 
-export const ViewPage = ({ post, url, relatedPosts }) => {
+export const ViewPage = ({ post, url, relatedPosts, prevPost, nextPost }) => {
 
   // Helper function to get featured image
   const getFeaturedImage = (post) => {
@@ -207,8 +207,25 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
 
                     {/* PREVIOUS / NEXT */}
                     <div className="nav-box">
-                      <span><i className="bi bi-arrow-left"></i> Previous Post</span>
-                      <span>Next Post <i className="bi bi-arrow-right"></i></span>
+                      {prevPost ? (
+                        <Link href={getPostUrl(prevPost)}>
+                          <span><i className="bi bi-arrow-left"></i> Previous Post</span>
+                        </Link>
+                      ) : (
+                        <span style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                          <i className="bi bi-arrow-left"></i> Previous Post
+                        </span>
+                      )}
+
+                      {nextPost ? (
+                        <Link href={getPostUrl(nextPost)}>
+                          <span>Next Post <i className="bi bi-arrow-right"></i></span>
+                        </Link>
+                      ) : (
+                        <span style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                          Next Post <i className="bi bi-arrow-right"></i>
+                        </span>
+                      )}
                     </div>
 
                     {/* RELATED POST */}

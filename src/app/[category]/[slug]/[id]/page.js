@@ -126,7 +126,7 @@ const post = posts[0];
     try {
       const categoryId = post.categories[0];
       const relatedRes = await fetch(
-        `${CONFIG.API_URL}posts?categories=${categoryId}&per_page=6&exclude=${postId}&_embed`,
+        `${CONFIG.API_URL}posts?categories=${categoryId}&per_page=6&exclude=${postId}&orderby=date&order=desc&_embed`,
         { next: { revalidate: 30 } }
       );
 
@@ -142,9 +142,41 @@ const post = posts[0];
     }
   }
 
+  // Fetch previous and next posts based on date (no category filter)
+  let prevPost = null;
+  let nextPost = null;
+
+  try {
+    // Fetch previous post (older post before current post's date)
+    const prevRes = await fetch(
+      `${CONFIG.API_URL}posts?per_page=1&before=${post.date}&orderby=date&order=desc&_embed`,
+      { next: { revalidate: 30 } }
+    );
+    if (prevRes.ok) {
+      const prevPosts = await prevRes.json();
+      if (prevPosts.length > 0) {
+        prevPost = prevPosts[0];
+      }
+    }
+
+    // Fetch next post (newer post after current post's date)
+    const nextRes = await fetch(
+      `${CONFIG.API_URL}posts?per_page=1&after=${post.date}&orderby=date&order=asc&_embed`,
+      { next: { revalidate: 30 } }
+    );
+    if (nextRes.ok) {
+      const nextPosts = await nextRes.json();
+      if (nextPosts.length > 0) {
+        nextPost = nextPosts[0];
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching prev/next posts:', error);
+  }
+
   return (
       <>
-      <ViewPage post={post} url={fullUrl} relatedPosts={relatedPosts}/>
+      <ViewPage post={post} url={fullUrl} relatedPosts={relatedPosts} prevPost={prevPost} nextPost={nextPost}/>
 
 {/* <div>
       <h1>{post.title.rendered}</h1>
