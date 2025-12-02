@@ -19,6 +19,7 @@ console.log("widget",widgetAreas); */
   let results = [];
   let topCategoeyNews = [];
   let top_news = [];
+  let mostViewed = [];
 
   // If search term exists, fetch search results
   if (term) {
@@ -71,6 +72,34 @@ console.log("widget",widgetAreas); */
       top_news = [];
     }
 
+    // Fetch most viewed posts from today to 7 days ago (5 posts)
+    try {
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const afterDate = sevenDaysAgo.toISOString();
+
+      const mostViewedRes = await fetch(
+        `${CONFIG.API_URL}posts?after=${afterDate}&orderby=post_views_count&order=desc&per_page=5&_embed`,
+        { cache: "no-store" }
+      );
+
+      if (!mostViewedRes.ok) {
+        console.error(`Failed to fetch most viewed posts: ${mostViewedRes.status} ${mostViewedRes.statusText}`);
+        mostViewed = [];
+      } else {
+        const contentType = mostViewedRes.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error(`Invalid content type for most viewed posts: ${contentType}`);
+          mostViewed = [];
+        } else {
+          mostViewed = await mostViewedRes.json();
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching most viewed posts:', error);
+      mostViewed = [];
+    }
+
     // Otherwise, fetch category news
 //special News - 72(1043)
     const cat = {
@@ -79,6 +108,7 @@ console.log("widget",widgetAreas); */
         8: "international",
         40:"blog",
         1:"top-news",
+        30:"video"
      //   72:"special-news"
      /*  12: "business",
       1043:"special-news",
@@ -92,7 +122,7 @@ console.log("widget",widgetAreas); */
     };
     const categories = [
       10797,
-      6,8,40,1
+      6,8,40,1,30
 
     /*   12,
       1043,
@@ -214,18 +244,18 @@ console.log("widget",widgetAreas); */
 
 // Fetch results
 //const topCategoeyNews = await fetch(apiUrl);
-console.log("top_news",top_news)
+//console.log("top_news",top_news)
 
   return (
     <>
       <pre style={{display:"none"}}>
-        {JSON.stringify(topCategoeyNews)}
+        {JSON.stringify(mostViewed)}
       </pre>
 
       {term ? (
         <SearchListPage posts={results} searchTerm={term} />
       ) : (
-        <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} />
+        <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} mostViewed={mostViewed} />
       )}
     </>
   )

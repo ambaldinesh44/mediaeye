@@ -11,7 +11,7 @@ const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.
   ssr: false,
 });
 
-export const HomePage = ({ term = '', results = [], categoryNews = [], top_news = [] }) => {
+export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_news = [] }) => {
 
   // Get featured posts for carousel (first category, first 5 posts)
   const featuredPosts = categoryNews?.[0]?.posts?.slice(0, 5) || [];
@@ -112,34 +112,29 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
               <div class="section-box right">
 
                 <div class="section-title">
-                  <h3><img src="images/trending-now-icon.png" class="img-fluid me-1" width="16px" /> Trending Now</h3>
+                  <h3><img src="/images/trending-now-icon.png" class="img-fluid me-1" width="16px" /> Trending Now</h3>
                 </div>
 
                 <div class="side-list">
 
-                  <div class="list-item">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="" />
-                    <div class="list-item-content">
-                      <h4>Economic Recovery Shows Strong Signs</h4>
-                      <span><i class="bi bi-clock clock-icon"></i> 4 hours ago</span>
-                    </div>
-                  </div>
-
-                  <div class="list-item">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="" />
-                    <div class="list-item-content">
-                      <h4>Climate Summit Reaches Historic Agreement</h4>
-                      <span><i class="bi bi-clock clock-icon"></i> 6 hours ago</span>
-                    </div>
-                  </div>
-
-                  <div class="list-item">
-                    <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d" alt="" />
-                    <div class="list-item-content">
-                      <h4>Global Markets Show Mixed Reactions</h4>
-                      <span><i class="bi bi-clock clock-icon"></i> 7 hours ago</span>
-                    </div>
-                  </div>
+                  {mostViewed.map((post) => (
+                    <Link key={post.id} href={getPostUrl(post)}>
+                      <div class="list-item">
+                        <Image
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'trending'}
+                          width={100}
+                          height={100}
+                          loading="lazy"
+                          style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                        />
+                        <div class="list-item-content">
+                          <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                          <span><i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
 
                 </div>
 
@@ -164,14 +159,14 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
 
                 <div class="row g-3">
 
-                  {/* MAIN NEWS - First Item from results */}
-                  {results[0] && (
+                  {/* MAIN NEWS - Seventh Item from results */}
+                  {results[6] && (
                     <div class="col-lg-8 col-md-12 col-12">
-                      <Link href={getPostUrl(results[0])}>
+                      <Link href={getPostUrl(results[6])}>
                         <div class="news-image">
                           <Image
-                            src={getFeaturedImage(results[0])}
-                            alt={results[0].title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                            src={getFeaturedImage(results[6])}
+                            alt={results[6].title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
                             width={800}
                             height={500}
                             priority
@@ -180,20 +175,20 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
                           />
                         </div>
 
-                        <h3 class="news-title" dangerouslySetInnerHTML={{ __html: results[0].title.rendered }} />
+                        <h3 class="news-title" dangerouslySetInnerHTML={{ __html: results[6].title.rendered }} />
 
                         <div class="news-meta">
-                          {results[0]._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'} • {getTimeAgo(results[0].date)}
+                          {results[6]._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'} • {getTimeAgo(results[6].date)}
                         </div>
 
-                        <p class="news-desc" dangerouslySetInnerHTML={{ __html: results[0].excerpt?.rendered || '' }} />
+                        <p class="news-desc" dangerouslySetInnerHTML={{ __html: results[6].excerpt?.rendered || '' }} />
                       </Link>
                     </div>
                   )}
 
-                  {/* RIGHT SIDE NEWS LIST - Items 2-5 from results */}
+                  {/* RIGHT SIDE NEWS LIST - Items 7-10 from results */}
                   <div class="col-lg-4 col-md-12 col-12">
-                    {results.slice(1, 5).map((post) => (
+                    {results.slice(7, 10).map((post) => (
                       <Link key={post.id} href={getPostUrl(post)}>
                         <div class="right-news-item">
                           <div class="dot"></div>
@@ -576,6 +571,112 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
   </div>
 </div>
 
+  <div class="container-custom ">
+  <div class="row g-3">
+
+
+    <div class="col-lg-9 col-md-12 col-12">
+      <div class="section-box">
+        <div class="section-title">
+          <h2>Videos</h2>
+          <a href="#">View All →</a>
+        </div>
+
+
+   <div class="video-grid">
+
+       {categoryNews.find(cat => cat.categoryName === 'video')?.posts?.slice(0, 9).map((post, index) => {
+         const cardClass = index === 1 || index === 2 || index === 5 ? 'large' : 'small';
+         // Extract YouTube video ID from the post content or custom field
+         const videoUrl = post.content?.rendered || post.acf?.video_url || '';
+         const youtubeMatch = videoUrl.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+         const videoId = youtubeMatch ? youtubeMatch[1] : null;
+
+         return (
+           <div key={post.id} class={`video-card ${cardClass}`}>
+             {videoId ? (
+               <iframe
+                 width="100%"
+                 height="100%"
+                 src={`https://www.youtube.com/embed/${videoId}`}
+                 title={post.title.rendered?.replace(/<[^>]*>/g, '') || 'video'}
+                 frameBorder="0"
+                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                 allowFullScreen
+                 style={{ aspectRatio: '16/9' }}
+               ></iframe>
+             ) : (
+               <Image
+                 src={getFeaturedImage(post)}
+                 alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'video'}
+                 width={400}
+                 height={300}
+                 loading="lazy"
+                 className="img-fluid"
+                 style={{ width: '100%', height: 'auto' }}
+               />
+             )}
+             <div class="video-title" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+           </div>
+         );
+       })}
+
+    </div>
+      </div>
+    </div>
+
+    
+     <div class="col-lg-3 col-md-4 col-12">
+
+      <div class="sponsored-card">
+    <div class="sponsored-title">SPONSORED</div>
+
+     <img src="images/sponsered2.png" class=" img-fluid sponsored-img"/>
+
+    <div class="sponsored-content">
+      <h6>Smart Investment Made Simple</h6>
+      <p>Start building wealth with AI-powered portfolio management.</p>
+      <span>by WealthTech</span>
+
+      <button class="sponsored-btn">Learn More</button>
+    </div>
+  </div>
+
+     {/*    <div class="upcoming-box">
+          <div class="up-heading"><img src="images/calendar-icon.svg" class="img-fluid me-2" width="16px"/> Upcoming</div>
+
+          <div class="up-item">
+            <div class="up-date">15<span>OCT</span></div>
+            <div class="up-info">
+              <h6>Economic Summit 2025</h6>
+              <p>10:00 AM</p>
+            </div>
+          </div>
+
+          <div class="up-item">
+            <div class="up-date">22<span>OCT</span></div>
+            <div class="up-info">
+              <h6>Tech Innovation Conference</h6>
+              <p>2:00 PM</p>
+            </div>
+          </div>
+
+          <div class="up-item">
+            <div class="up-date">28<span>OCT</span></div>
+            <div class="up-info">
+              <h6>Climate Action Meeting</h6>
+              <p>11:00 AM</p>
+            </div>
+          </div>
+
+          <button class="view-btn">View All</button>
+        </div> */}
+
+      </div>
+
+    
+  </div>
+</div>
 
 
 

@@ -45,8 +45,8 @@ export const CategoryPostList = ({ categories = {}, posts = [], currentPage = 1,
         <div class="col-lg-9 col-md-8 col-12">
           <div class="section-box">
             <div class="section-title">
-              <h2>Government Policies</h2>
-              <a href="#">View All →</a>
+              <h2 style={{ textTransform: 'capitalize' }}>{categories[0]?.name}</h2>
+            {/*   <a href="#">View All →</a> */}
             </div>
 
             <CategoryListPage posts={posts} />
