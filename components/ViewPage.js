@@ -156,7 +156,15 @@ export const ViewPage = ({ post, url, relatedPosts }) => {
                   <div className="article-detailed-content">
                     <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
                     <div className="news-meta">
-                      <i className="bi bi-clock clock-icon"></i> {formatDate(post.date)}
+                      <Image
+                        src={post._embedded?.author?.[0]?.avatar_urls?.['48'] || '/images/default-avatar.png'}
+                        alt={post._embedded?.author?.[0]?.name || 'Admin'}
+                        width={24}
+                        height={24}
+                        className="author-avatar"
+                        style={{ borderRadius: '50%', marginRight: '8px' }}
+                      />
+                      <i className="bi bi-clock clock-icon"></i> {formatDate(post.date)}  by  <Link href={`/author/${post._embedded?.author?.[0]?.id || '1'}`}>{post._embedded?.author?.[0]?.name || 'Admin'}</Link> 
                     </div>
                   </div>
 

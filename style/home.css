@@ -13,7 +13,7 @@
 /* Track */
 .marquee-track { display: flex; width: max-content; animation: scroll-left 60s linear infinite;     /* VERY SLOW */ }
 /* Single news */
-.news-item { padding-right: 80px; font-size: 15px; color: #9b0b0b; white-space: nowrap; }
+.news-item { padding-right: 20px; font-size: 15px; color: #9b0b0b; white-space: nowrap; }
 /* Animation */
 @keyframes scroll-left {
 0% { transform: translateX(0); }
