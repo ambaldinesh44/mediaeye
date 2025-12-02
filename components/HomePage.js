@@ -3,6 +3,7 @@ import "../style/home.css"
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import dayjs from 'dayjs';
 import { getTimeAgo } from '../utils/timeUtils';
 
 const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
@@ -41,6 +42,12 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
     return html?.replace(/<[^>]*>/g, '') || '';
   };
 
+  // Helper function to format time for news rotator
+  const formatTime = (dateString) => {
+    const date = dayjs(dateString);
+    return date.format('h:mm a');
+  };
+
   // Helper function to get featured image
   const getFeaturedImage = (post) => {
     return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder-image.jpg';
@@ -54,13 +61,13 @@ export const HomePage = ({ term = '', results = [], categoryNews = [] }) => {
               <div className="container">
                 <div className="news-rotator-container">
                   <div className="news-icon">
-                    <img src="images/newsicon.svg" className="img-fluid" />
+                    <img src="/images/newsicon.svg" className="img-fluid" />
                   </div>
                   <div className="news-box">
                     <div className="marquee-track">
                       {newsRotatorItems.map((post) => (
                         <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
-                          {stripHtml(post.title.rendered)}
+                          {formatTime(post.date)} - {stripHtml(post.title.rendered)}
                         </Link>
                       ))}
 
