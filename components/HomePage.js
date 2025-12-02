@@ -65,11 +65,11 @@ export const HomePage = ({ term = '', results = [], categoryNews = [], top_news 
                 <img src="/images/newsicon.svg" className="img-fluid" />
               </div>
               <div className="news-box">
-                {newsRotatorItems.map((post) => (
+            {/*     {newsRotatorItems.map((post) => (
                   <>
                     {stripHtml(post.title.rendered)}
                   </>
-                ))}
+                ))} */}
                 <Marquee speed={50} gradient={false} pauseOnHover={true}>
                   {newsRotatorItems.map((post) => (
                     <Link key={`news-${post.id}`} href={getPostUrl(post)} className="news-item">
