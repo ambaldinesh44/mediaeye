@@ -20,6 +20,7 @@ console.log("widget",widgetAreas); */
   let topCategoeyNews = [];
   let top_news = [];
   let mostViewed = [];
+  let trendingTopics = [];
 
   // If search term exists, fetch search results
   if (term) {
@@ -77,9 +78,9 @@ console.log("widget",widgetAreas); */
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       const afterDate = sevenDaysAgo.toISOString();
-
+console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
       const mostViewedRes = await fetch(
-        `${CONFIG.API_URL}posts?after=${afterDate}&orderby=post_views_count&order=desc&per_page=5&_embed`,
+        `${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`,
         { cache: "no-store" }
       );
 
@@ -231,6 +232,37 @@ console.log("widget",widgetAreas); */
       console.error('Error fetching latest posts:', error);
       results = [];
     }
+
+    // Fetch trending topics (tags with most posts)
+    try {
+      const trendingRes = await fetch(
+        `${CONFIG.API_URL}tags?orderby=count&order=desc&per_page=5&_embed`,
+        { cache: "no-store" }
+      );
+
+      if (!trendingRes.ok) {
+        console.error(`Failed to fetch trending topics: ${trendingRes.status} ${trendingRes.statusText}`);
+        trendingTopics = [];
+      } else {
+        const contentType = trendingRes.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          console.error(`Invalid content type for trending topics: ${contentType}`);
+          trendingTopics = [];
+        } else {
+          const tags = await trendingRes.json();
+          // Format the response to match the trending structure
+          trendingTopics = tags.map(tag => ({
+            name: tag.name,
+            count: tag.count,
+            slug: tag.slug,
+            link: `/tag/${tag.slug}`
+          }));
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching trending topics:', error);
+      trendingTopics = [];
+    }
   }
 
 //
@@ -255,7 +287,7 @@ console.log("widget",widgetAreas); */
       {term ? (
         <SearchListPage posts={results} searchTerm={term} />
       ) : (
-        <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} mostViewed={mostViewed} />
+        <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} mostViewed={mostViewed} trendingTopics={trendingTopics} />
       )}
     </>
   )

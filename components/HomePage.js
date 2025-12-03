@@ -11,7 +11,7 @@ const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.
   ssr: false,
 });
 
-export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_news = [] }) => {
+export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_news = [], trendingTopics = [] }) => {
 
   // Get featured posts for carousel (first category, first 5 posts)
   const featuredPosts = categoryNews?.[0]?.posts?.slice(0, 5) || [];
@@ -117,19 +117,22 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
                 <div class="side-list">
 
-                  {mostViewed.map((post) => (
-                    <Link key={post.id} href={getPostUrl(post)}>
+                  {mostViewed
+                    ?.sort((a, b) => new Date(b.date) - new Date(a.date))
+                    ?.slice(0, 5)
+                    ?.map((post) => (
+                    <Link key={post.id} href={post.link}>
                       <div class="list-item">
                         <Image
-                          src={getFeaturedImage(post)}
-                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'trending'}
+                          src={post.image || '/placeholder-image.jpg'}
+                          alt={post.title || 'trending'}
                           width={100}
                           height={100}
                           loading="lazy"
                           style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                         />
                         <div class="list-item-content">
-                          <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                          <h4>{post.title}</h4>
                           <span><i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
                         </div>
                       </div>
@@ -212,15 +215,35 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
             <div class="col-lg-3 col-md-4 col-12">
               <div class="section-box ad-box">
-                <Image
-                  src="/images/add.png"
-                  alt="Advertisement"
-                  width={300}
-                  height={600}
-                  loading="lazy"
-                  className="img-fluid"
-                  style={{ width: '100%', height: 'auto' }}
-                />
+                {/* Advertisement Banner 1 */}
+                <div style={{ marginBottom: '20px' }}>
+                  <a href="https://www.theleela.com/" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="https://www.mediaeyenews.com/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-18-at-192.34.33.jpeg"
+                      alt="Advertisement"
+                      width={300}
+                      height={208}
+                      loading="lazy"
+                      className="img-fluid"
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    />
+                  </a>
+                </div>
+
+                {/* Advertisement Banner 2 */}
+                <div>
+                  <a href="https://www.theleela.com/" target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src="https://www.mediaeyenews.com/wp-content/uploads/2024/04/IMG-20240416-WA0028.jpg"
+                      alt="Advertisement"
+                      width={300}
+                      height={300}
+                      loading="lazy"
+                      className="img-fluid"
+                      style={{ width: '100%', height: 'auto', borderRadius: '8px' }}
+                    />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -277,26 +300,20 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
                 </div>
 
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <span class="title">Asia Cup Cricket</span>
-                    <small class="float-end">2.4k</small>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="title">Stock Market</span>
-                    <small class="float-end">1.8k</small>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="title">Climate Change</span>
-                    <small class="float-end">1.5k</small>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="title">Technology Innovation</span>
-                    <small class="float-end">1.2k</small>
-                  </li>
-                  <li class="list-group-item">
-                    <span class="title">Healthcare Reform</span>
-                    <small class="float-end">950</small>
-                  </li>
+                  {trendingTopics.length > 0 ? (
+                    trendingTopics.map((topic, index) => (
+                      <li key={index} class="list-group-item">
+                        <Link href={topic.link}>
+                          <span class="title">{topic.name}</span>
+                          <small class="float-end">{topic.count}</small>
+                        </Link>
+                      </li>
+                    ))
+                  ) : (
+                    <>
+                     
+                    </>
+                  )}
                 </ul>
               </div>
 

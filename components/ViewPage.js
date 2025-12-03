@@ -294,7 +294,7 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
 
                 {/* Advertisement Banner 2 */}
                 <div style={{ marginBottom: '20px' }}>
-                  <a href="#" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.theleela.com/" target="_blank" rel="noopener noreferrer">
                     <Image
                       src="https://www.mediaeyenews.com/wp-content/uploads/2024/07/WhatsApp-Image-2024-07-18-at-192.34.33-300x208.jpeg"
                       alt="Advertisement"
@@ -308,7 +308,7 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
                 </div>
 
   <div style={{ marginBottom: '20px' }}>
-                  <a href="#" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.theleela.com/" target="_blank" rel="noopener noreferrer">
                     <Image
                       src="https://www.mediaeyenews.com/wp-content/uploads/2024/04/WhatsApp-Image-2024-04-11-at-3.20.58-PM-300x300.jpeg"
                       alt="Advertisement"
@@ -321,33 +321,26 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
                   </a>
                 </div>
               {topCategoeyNews?.find(cat => cat.categoryName === 'special-news')?.posts?.length > 0 && (
-                <div className="section-box11" style={{ marginTop: '20px' }}>
+                <div className="section-box right" style={{ marginTop: '20px' }}>
                   <div className="section-title">
                     <h3>Special News</h3>
                   </div>
-                  <div className="match-list">
-                    {topCategoeyNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 6).map((post, index) => (
+                  <div className="side-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 10).map((post) => (
                       <Link key={post.id} href={getPostUrl(post)}>
-                        <div className="match-item">
-                          <div className="match-left">
-                            <Image
-                              src={getFeaturedImage(post)}
-                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
-                              width={80}
-                              height={80}
-                              loading="lazy"
-                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                            />
-                            <div className="match-text">
-                              <div className="match-meta">
-                                <span className="match-tag">NEWS {index + 1}</span>
-                                <small>{getTimeAgo(post.date)}</small>
-                              </div>
-                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
-                            </div>
+                        <div className="list-item">
+                          <Image
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'special news'}
+                            width={100}
+                            height={100}
+                            loading="lazy"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                          />
+                          <div className="list-item-content">
+                            <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                            <span><i className="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
                           </div>
-                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
                         </div>
                       </Link>
                     ))}
@@ -357,33 +350,26 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
 
               {/* TOP NEWS SECTION */}
               {topCategoeyNews?.find(cat => cat.categoryName === 'top-news')?.posts?.length > 0 && (
-                <div className="section-box" style={{ marginTop: '20px' }}>
+                <div className="section-box right" style={{ marginTop: '20px' }}>
                   <div className="section-title">
                     <h3>Top News</h3>
                   </div>
-                  <div className="match-list">
-                    {topCategoeyNews.find(cat => cat.categoryName === 'top-news')?.posts?.slice(0, 6).map((post, index) => (
+                  <div className="side-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'top-news')?.posts?.slice(0, 10).map((post) => (
                       <Link key={post.id} href={getPostUrl(post)}>
-                        <div className="match-item">
-                          <div className="match-left">
-                            <Image
-                              src={getFeaturedImage(post)}
-                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
-                              width={80}
-                              height={80}
-                              loading="lazy"
-                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                            />
-                            <div className="match-text">
-                              <div className="match-meta">
-                                <span className="match-tag">NEWS {index + 1}</span>
-                                <small>{getTimeAgo(post.date)}</small>
-                              </div>
-                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
-                            </div>
+                        <div className="list-item">
+                          <Image
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'top news'}
+                            width={100}
+                            height={100}
+                            loading="lazy"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                          />
+                          <div className="list-item-content">
+                            <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                            <span><i className="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
                           </div>
-                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
                         </div>
                       </Link>
                     ))}
@@ -393,38 +379,31 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
 
               {/* OTHERS SECTION */}
               {topCategoeyNews?.find(cat => cat.categoryName === 'others')?.posts?.length > 0 && (
-                <div className="section-box" style={{ marginTop: '20px' }}>
+                <div className="section-box right" style={{ marginTop: '20px' }}>
                   <div className="section-title">
-                    <h3>Others</h3>
+                    <h3>Others -{topCategoeyNews?.find(cat => cat.categoryName === 'others')?.posts?.length}</h3>
                   </div>
-                  <div className="match-list">
-                    {topCategoeyNews.find(cat => cat.categoryName === 'others')?.posts?.slice(0, 6).map((post, index) => (
+                  <div className="side-list">
+                    {topCategoeyNews.find(cat => cat.categoryName === 'others')?.posts?.slice(0, 10).map((post) => (
                       <Link key={post.id} href={getPostUrl(post)}>
-                        <div className="match-item">
-                          <div className="match-left">
-                            <Image
-                              src={getFeaturedImage(post)}
-                              alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
-                              width={80}
-                              height={80}
-                              loading="lazy"
-                              style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                            />
-                            <div className="match-text">
-                              <div className="match-meta">
-                                <span className="match-tag">NEWS {index + 1}</span>
-                                <small>{getTimeAgo(post.date)}</small>
-                              </div>
-                              <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                              <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
-                            </div>
+                        <div className="list-item">
+                          <Image
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'others'}
+                            width={100}
+                            height={100}
+                            loading="lazy"
+                            style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                          />
+                          <div className="list-item-content">
+                            <h4 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                            <span><i className="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
                           </div>
-                          <div className="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
                         </div>
                       </Link>
                     ))}
                   </div>
-                  
+
                 </div>
               )}
 </div>
