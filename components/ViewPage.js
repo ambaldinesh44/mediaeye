@@ -1,5 +1,5 @@
 'use client';
-
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Comments } from './Comments';
@@ -8,6 +8,10 @@ import '../style/home.css';
 import { getTimeAgo } from '../utils/timeUtils';
 export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, nextPost }) => {
 
+   useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+  
   // Helper function to get featured image
   const getFeaturedImage = (post) => {
     return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '/placeholder-image.jpg';

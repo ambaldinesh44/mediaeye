@@ -7,7 +7,7 @@ export const PostPageView = ({post={},categories=[],tags=[]})=>{
   const [page, setPage] = useState(1);
   const perPage = 5;
         useEffect(() => {
-     window.scrollTo(0, 0);
+     //window.scrollTo(0, 0);
          fetchComments();
   }, []);
 

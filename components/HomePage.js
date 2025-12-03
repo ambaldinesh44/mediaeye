@@ -14,6 +14,10 @@ const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.
 
 export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_news = [], trendingTopics = [] }) => {
 
+   useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+    
   const [activeCategory, setActiveCategory] = useState('Trending');
 
   // Function to scroll to section
