@@ -6,12 +6,24 @@ import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import Marquee from 'react-fast-marquee';
 import { getTimeAgo } from '../utils/timeUtils';
+import { useState } from 'react';
 
 const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
   ssr: false,
 });
 
 export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_news = [], trendingTopics = [] }) => {
+
+  const [activeCategory, setActiveCategory] = useState('Trending');
+
+  // Function to scroll to section
+  const scrollToSection = (sectionId, categoryName) => {
+    setActiveCategory(categoryName);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   // Get featured posts for carousel (first category, first 5 posts)
   const featuredPosts = categoryNews?.[0]?.posts?.slice(0, 5) || [];
@@ -84,13 +96,111 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
       </div>
       <div class="main-wrapper">
 
+   <div class="container-custom">
+      <div class="row">
+      <div class="col-md-10 col-12 mx-auto">
+          <Image
+            src="/images/top-banner.jpeg"
+            alt="Top Banner"
+            width={1200}
+            height={200}
+            className="img-fluid"
+            style={{ width: '100%', height: 100}}
+            priority
+          />
+      </div>
+      </div>
+      <div class="row">
+         <div class="category-scroll">
 
+        <div
+          className={`category-item ${activeCategory === 'Trending' ? 'active' : ''}`}
+          onClick={() => scrollToSection('trending-section', 'Trending')}
+        >
+          Trending
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Latest' ? 'active' : ''}`}
+          onClick={() => scrollToSection('latest-section', 'Latest')}
+        >
+          Latest
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Top' ? 'active' : ''}`}
+          onClick={() => scrollToSection('top-news-section', 'Top')}
+        >
+          Top
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'National' ? 'active' : ''}`}
+          onClick={() => scrollToSection('national-section', 'National')}
+        >
+          National
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'International' ? 'active' : ''}`}
+          onClick={() => scrollToSection('international-section', 'International')}
+        >
+          International
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Blog' ? 'active' : ''}`}
+          onClick={() => scrollToSection('blog-section', 'Blog')}
+        >
+          Blog
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Gender' ? 'active' : ''}`}
+          onClick={() => scrollToSection('gender-section', 'Gender')}
+        >
+          Gender
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Articles' ? 'active' : ''}`}
+          onClick={() => scrollToSection('articles-section', 'Articles')}
+        >
+          Articles
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Videos' ? 'active' : ''}`}
+          onClick={() => scrollToSection('videos-section', 'Videos')}
+        >
+          Videos
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Social Media' ? 'active' : ''}`}
+          onClick={() => scrollToSection('social-media-section', 'Social Media')}
+        >
+          Social Media
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Web Stories' ? 'active' : ''}`}
+          onClick={() => scrollToSection('web-stories-section', 'Web Stories')}
+        >
+          Web Stories
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Photos' ? 'active' : ''}`}
+          onClick={() => scrollToSection('photos-section', 'Photos')}
+        >
+          Photos
+        </div>
+        <div
+          className={`category-item ${activeCategory === 'Campaigns' ? 'active' : ''}`}
+          onClick={() => scrollToSection('campaigns-section', 'Campaigns')}
+        >
+          Campaigns
+        </div>
+
+    </div>
+      </div>
+    </div>
         <div class="container-custom">
           <div class="row g-3">
 
 
             <div class="col-lg-9 col-md-8 col-12">
-              <div class="section-box">
+              <div class="section-box" id="trending-section">
 
                 <div class="section-title">
                   <h2>Trending Stories</h2>
@@ -153,7 +263,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
 
             <div class="col-lg-9 col-md-8 col-12">
-              <div class="section-box">
+              <div class="section-box" id="latest-section">
 
                 <div class="section-title">
                   <h2>Latest News</h2>
@@ -257,7 +367,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
 
             <div class="col-lg-9 col-md-8 col-12">
-              <div class="section-box">
+              <div class="section-box" id="national-section">
                 <div class="section-title">
                   <h2>National</h2>
                   <Link href="/category/national">View All →</Link>
@@ -340,7 +450,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
 
             <div class="col-lg-9 col-md-8 col-12">
-              <div class="section-box">
+              <div class="section-box" id="international-section">
                 <div class="section-title">
                   <h2>International</h2>
                   <Link href="/category/international">View All →</Link>
@@ -399,7 +509,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
  
             <div class="col-lg-9 col-md-12 col-12">
-              <div class="section-box">
+              <div class="section-box" id="top-news-section">
                 <div class="section-title">
                   <h2>Top News</h2>
                   <a href="#">View All →</a>
@@ -501,7 +611,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
   <div class="row g-3">
 
     <div class="col-lg-9 col-md-8 col-12">
-      <div class="section-box">
+      <div class="section-box" id="blog-section">
 
         <div class="section-title">
           <h2>Blog</h2>
@@ -593,7 +703,7 @@ export const HomePage = ({ mostViewed=[], results = [], categoryNews = [], top_n
 
 
     <div class="col-lg-9 col-md-12 col-12">
-      <div class="section-box">
+      <div class="section-box" id="videos-section">
         <div class="section-title">
           <h2>Videos</h2>
           <a href="#">View All →</a>
