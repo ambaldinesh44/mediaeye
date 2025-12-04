@@ -152,7 +152,6 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
 
         <div className="container-custom">
           <div className="row g-3">
-
             {/* LEFT */}
             <div className="col-lg-9 col-md-8 col-12">
               <div className="section-box">
@@ -163,7 +162,7 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
                     <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
                     <div className="news-meta">
                       <Image
-                        src={post._embedded?.author?.[0]?.avatar_urls?.['48'] || '/images/default-avatar.png'}
+                        src={post._embedded?.author?.[0]?.mpp_avatar?.['96'] || '/images/default-avatar.png'}
                         alt={post._embedded?.author?.[0]?.name || 'Admin'}
                         width={24}
                         height={24}

@@ -109,8 +109,13 @@ console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
         8: "international",
         40:"blog",
         1:"top-news",
-        30:"video"
-     //   72:"special-news"
+        30:"video",
+        72:"special-news",
+        13: "education",
+         5: "city",
+           20: "science",
+           56:"technology"
+     //   
      /*  12: "business",
       1043:"special-news",
       6: "national",
@@ -123,8 +128,12 @@ console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
     };
     const categories = [
       10797,
-      6,8,40,1,30
-
+      6,8,40,1,30,
+      72,
+      13,
+      5,
+      20,
+      56
     /*   12,
       1043,
       6,

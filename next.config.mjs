@@ -6,6 +6,42 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.mediaeyenews.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gravatar.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '0.gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '0.gravatar.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '1.gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '1.gravatar.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '2.gravatar.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '2.gravatar.com',
+      },
     ],
   },
   async headers() {
