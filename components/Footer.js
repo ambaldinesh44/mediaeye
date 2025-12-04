@@ -57,11 +57,11 @@ export const Footer = () => {
           <div className="footer-col">
             <h4 className="footer-title">Company</h4>
             <ul className="footer-list">
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
+              <li><Link href="/about-us">About</Link></li>
+              <li><Link href="/contact-us">Contact</Link></li>
               <li><Link href="/careers">Careers</Link></li>
-              <li><Link href="/privacy">Privacy</Link></li>
-              <li><Link href="/terms">Terms</Link></li>
+              <li><Link href="/privacy-policy-2">Privacy</Link></li>
+              <li><Link href="/terms-conditions">Terms</Link></li>
             </ul>
           </div>
 
