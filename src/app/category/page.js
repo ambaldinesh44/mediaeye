@@ -6,7 +6,7 @@ export default  async function CategoryPage({ params }) {
   const { slug } = await params;
 console.log("ddddddddddddd",slug)
     const res = await fetch(
-      `${CONFIG.API_URL}categories?page=2&per_page=100&_embed`,
+      `${CONFIG.API_URL}categories?page=1&per_page=100&_embed`,
     { next: { revalidate: 60 } }
     );
    const posts = await res.json();

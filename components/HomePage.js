@@ -602,7 +602,6 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
                           />
                           <div class="match-text">
                             <div class="match-meta">
-                              <span class="match-tag">NEWS {index + 1}</span>
                               <small>{getTimeAgo(post.date)}</small>
                             </div>
                             <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
@@ -670,31 +669,32 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
             </div>
           </div>
         </div>
-        <div class="container-custom ">
+
+           <div class="container-custom ">
           <div class="row g-3">
 
 
             <div class="col-lg-9 col-md-12 col-12">
               <div class="section-box" id="top-news-section">
                 <div class="section-title">
-                  <h2>Special News</h2>
-                  <Link href="/category/special-news">View All →</Link>
+                  <h2>Hot News</h2>
+                  <Link href="/category/hot-news">View All →</Link>
                 </div>
 
 
                 <div class="news-card-grid">
 
-                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 3).map((post) => (
+                  {categoryNews.find(cat => cat.categoryName === 'hot-news')?.posts?.slice(0, 3).map((post) => (
                     <Link key={post.id} href={getPostUrl(post)}>
                       <div class="news-card">
                         <Image
                           src={getFeaturedImage(post)}
-                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'special news'}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'hot news'}
                           width={400}
                           height={250}
                           loading="lazy"
                           className="img-fluid"
-                          style={{ width: '100%', height: 'auto' }}
+                          style={{ width: '100%', height: 250 }}
                         />
                         <div class="news-card-content">
                           <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
@@ -729,7 +729,94 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
                           />
                           <div class="match-text">
                             <div class="match-meta">
-                              <span class="match-tag">NEWS {index + 1}</span>
+                              <small>{getTimeAgo(post.date)}</small>
+                            </div>
+                            <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                            <small>{post._embedded?.author?.[0]?.name || 'Admin'}</small>
+                          </div>
+                        </div>
+                        <div class="match-score">{post._embedded?.['wp:term']?.[0]?.[0]?.name || 'News'}</div>
+                      </div>
+                    </Link>
+                  ))}
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-3 col-md-4 col-12 d-none d-lg-block ">
+              <div class="sponsored-wrapper">
+
+        
+
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="container-custom ">
+          <div class="row g-3">
+
+
+            <div class="col-lg-9 col-md-12 col-12">
+              <div class="section-box" id="top-news-section">
+                <div class="section-title">
+                  <h2>Special News</h2>
+                  <Link href="/category/special-news">View All →</Link>
+                </div>
+
+
+                <div class="news-card-grid">
+
+                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(0, 3).map((post) => (
+                    <Link key={post.id} href={getPostUrl(post)}>
+                      <div class="news-card">
+                        <Image
+                          src={getFeaturedImage(post)}
+                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'special news'}
+                          width={400}
+                          height={250}
+                          loading="lazy"
+                          className="img-fluid"
+                          style={{ width: '100%', height: 250 }}
+                        />
+                        <div class="news-card-content">
+                          <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                          <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
+                          <div class="news-meta">
+                            <span>
+                              <i class="bi bi-person user-icon"></i> {post._embedded?.author?.[0]?.name || 'Admin'}
+                            </span>
+                            <span><i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+
+                </div>
+
+
+                <div class="match-list">
+
+                  {categoryNews.find(cat => cat.categoryName === 'special-news')?.posts?.slice(3, 6).map((post, index) => (
+                    <Link key={post.id} href={getPostUrl(post)}>
+                      <div class="match-item">
+                        <div class="match-left">
+                          <Image
+                            src={getFeaturedImage(post)}
+                            alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'news'}
+                            width={80}
+                            height={80}
+                            loading="lazy"
+                            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                          />
+                          <div class="match-text">
+                            <div class="match-meta">
                               <small>{getTimeAgo(post.date)}</small>
                             </div>
                             <h6 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />

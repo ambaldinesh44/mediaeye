@@ -3,15 +3,15 @@ import { HomePage } from "@components/HomePage";
 import { SearchListPage } from "@components/SearchListPage";
 import { CONFIG } from "@util/config";
 
-export default async function WelcomePage({searchParams }) {
-/* 
-    const resSettings = await fetch(`${CONFIG.API_URL}settings`, { cache: "no-store" });
-  const settings = await resSettings.json();
-console.log("settingssettings",settings) 
-
-const res = await fetch(`${CONFIG.API_URL}widget-areas`);
-const widgetAreas = await res.json();
-console.log("widget",widgetAreas); */
+export default async function WelcomePage({ searchParams }) {
+  /* 
+      const resSettings = await fetch(`${CONFIG.API_URL}settings`, { cache: "no-store" });
+    const settings = await resSettings.json();
+  console.log("settingssettings",settings) 
+  
+  const res = await fetch(`${CONFIG.API_URL}widget-areas`);
+  const widgetAreas = await res.json();
+  console.log("widget",widgetAreas); */
 
   const params = await searchParams;
   const term = params?.s || params?.search || ""; // e.g. ?s=finesh or ?search=finesh
@@ -78,7 +78,7 @@ console.log("widget",widgetAreas); */
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       const afterDate = sevenDaysAgo.toISOString();
-console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
+      console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
       const mostViewedRes = await fetch(
         `${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`,
         { cache: "no-store" }
@@ -102,47 +102,62 @@ console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
     }
 
     // Otherwise, fetch category news
-//special News - 72(1043)
+    //special News - 72(1043)
     const cat = {
-      10797:"hot-news",
-      6: "national",
-        8: "international",
-        40:"blog",
-        1:"top-news",
-        30:"video",
-        72:"special-news",
-        13: "education",
-         5: "city",
-           20: "science",
-           56:"technology"
-     //   
-     /*  12: "business",
-      1043:"special-news",
-      6: "national",
-      47: "crime",
-      8: "international",
-      16: "personality",
-      10: "politics",
       10797: "hot-news",
-      2377: "cricket" */
+      6: "national",
+      8: "international",
+      40: "blog",
+      1: "top-news",
+      30: "video",
+      72: "special-news",
+      13: "education",
+      5: "city",
+      20: "science",
+      56: "technology",
+      13924: "editorial",
+      56: "technology",
+      12: "business",
+      17: "cinema",
+      94: "esg",
+       72: "sports-news",
+         10: "politics",
+          16: "personality",
+      //   
+      /*  12: "business",
+       1043:"special-news",
+       6: "national",
+       47: "crime",
+       8: "international",
+       16: "personality",
+       10: "politics",
+       10797: "hot-news",
+       2377: "cricket" */
     };
     const categories = [
       10797,
-      6,8,40,1,30,
+      6, 8, 40, 1, 30,
       72,
       13,
       5,
       20,
-      56
-    /*   12,
-      1043,
-      6,
-      47,
-      8,
-      16,
+      56,
+      13924,
+      12,
+      17,
+      94,
+      72,
       10,
-      10797,
-      2377, */
+      16
+      /*   12,
+        1043,
+        6,
+        47,
+        8,
+        16,
+        10,
+        10797,
+        2377, */
     ];
 
     /* const ress = await fetch(
@@ -274,22 +289,22 @@ console.log(`${CONFIG.MEDIAEYE_V1_URl}most-viewed-week`)
     }
   }
 
-//
-//console.log(topCategoeyNews);
+  //
+  //console.log(topCategoeyNews);
 
 
-// Build the API URL
-//const apiUrl = `${CONFIG.API_URL}posts?search=${encodeURIComponent(term)}&${categoryQuery}&orderby=date&order=desc&per_page=10&_embed`;
+  // Build the API URL
+  //const apiUrl = `${CONFIG.API_URL}posts?search=${encodeURIComponent(term)}&${categoryQuery}&orderby=date&order=desc&per_page=10&_embed`;
 
-//console.log(apiUrl);
+  //console.log(apiUrl);
 
-// Fetch results
-//const topCategoeyNews = await fetch(apiUrl);
-//console.log("top_news",top_news)
+  // Fetch results
+  //const topCategoeyNews = await fetch(apiUrl);
+  //console.log("top_news",top_news)
 
   return (
     <>
-      <pre style={{display:"none"}}>
+      <pre style={{ display: "none" }}>
         {JSON.stringify(mostViewed)}
       </pre>
 
