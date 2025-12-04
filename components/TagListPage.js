@@ -3,8 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getTimeAgo } from '../utils/timeUtils';
-
+import { useState,useEffect } from 'react';
 export const TagListPage = ({ posts = [], tagName = '' }) => {
+     useEffect(() => {
+        window.scrollTo(0, 0);
+      }, []);
+    
   // Helper function to get post URL
   const getPostUrl = (post) => {
     const categorySlug = post._embedded?.['wp:term']?.[0]?.[0]?.slug || 'news';

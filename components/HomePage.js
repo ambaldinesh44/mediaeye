@@ -6,7 +6,7 @@ import dynamic from 'next/dynamic';
 import dayjs from 'dayjs';
 import Marquee from 'react-fast-marquee';
 import { getTimeAgo } from '../utils/timeUtils';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 
 const SwiperCarousel = dynamic(() => import('./SwiperCarousel').then(mod => mod.SwiperCarousel), {
   ssr: false,
