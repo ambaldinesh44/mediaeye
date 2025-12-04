@@ -134,10 +134,17 @@ export default function ContactUsPage() {
               <div className="contact-info-box">
                 <h3>Get In Touch</h3>
                 <div className="contact-info-item">
+                  <i className="bi bi-person-fill"></i>
+                  <div>
+                    <h5>Name</h5>
+                    <p>K P Sasi Nair</p>
+                  </div>
+                </div>
+                <div className="contact-info-item">
                   <i className="bi bi-geo-alt-fill"></i>
                   <div>
                     <h5>Address</h5>
-                    <p>Media Eye News<br />Mumbai, India</p>
+                    <p>Mumbai, India</p>
                   </div>
                 </div>
                 <div className="contact-info-item">
@@ -151,7 +158,7 @@ export default function ContactUsPage() {
                   <i className="bi bi-telephone-fill"></i>
                   <div>
                     <h5>Phone</h5>
-                    <p>+91 1234567890</p>
+                    <p><a href="tel:+919820029241">+91 9820029241</a></p>
                   </div>
                 </div>
                 <div className="social-links">
