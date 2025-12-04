@@ -151,7 +151,7 @@ export default function ContactUsPage() {
                   <i className="bi bi-envelope-fill"></i>
                   <div>
                     <h5>Email</h5>
-                    <p>info@mediaeyenews.com</p>
+                    <p><a href="mailto:info@mediaeyenews.com">info@mediaeyenews.com</a></p>
                   </div>
                 </div>
                 <div className="contact-info-item">

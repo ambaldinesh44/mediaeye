@@ -75,6 +75,16 @@
   line-height: 1.6;
 }
 
+.contact-info-item p a {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info-item p a:hover {
+  color: #dc3545;
+}
+
 /* Social Links */
 .social-links {
   margin-top: 30px;
