@@ -33,7 +33,8 @@ export const CategoryList = ({categories = [], totalCount = 0}) => {
 
   return (
     <>
-      <aside className="category-sidebar">
+    <div className='main-wrapper'>
+ <aside className="category-sidebar">
         <h3>Categories</h3>
         <p className="category-count">
           Showing {displayedCategories.length} of {totalCount} categories
@@ -52,22 +53,16 @@ export const CategoryList = ({categories = [], totalCount = 0}) => {
             <button
               onClick={loadMoreCategories}
               disabled={loading}
-              className="load-more-btn"
-              style={{
-                padding: '10px 20px',
-                backgroundColor: loading ? '#ccc' : '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontSize: '16px'
-              }}
+              className="load-more-btn btn btn-primary"
+             
             >
               {loading ? 'Loading...' : 'Load More Categories'}
             </button>
           </div>
         )}
       </aside>
+    </div>
+     
     </>
   );
 }

@@ -120,7 +120,7 @@ export default async function WelcomePage({ searchParams }) {
       12: "business",
       17: "cinema",
       94: "esg",
-       72: "sports-news",
+       11: "sports-news",
          10: "politics",
           16: "personality",
       //   
@@ -146,7 +146,7 @@ export default async function WelcomePage({ searchParams }) {
       12,
       17,
       94,
-      72,
+      11,
       10,
       16
       /*   12,

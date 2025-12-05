@@ -1,30 +1,22 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background-color: #f9f8f8; }
-a {
-  text-decoration: none;
-  color: inherit;       /* inherit color from parent (useful in components) */
-  cursor: pointer;
-}
-
+body { background-color: #f9f8f8; font-size: 15px; line-height: normal; }
+a { text-decoration: none; color: inherit;     /* inherit color from parent (useful in components) */ cursor: pointer; }
+a:hover { color: #E7000B; }
 /* keep keyboard focus visible and accessible */
-a:focus,
-a:focus-visible {
-  outline:none; /* or use your custom focus color */
-  outline-offset: 2px;
-}
-.top-navbar { font-family: "Inria Sans", sans-serif; position: sticky; top: 0; z-index: 1000; background: #ffffff; border-bottom: 1px solid #e5e5e5;     /* background-color: #ffffff; 
+a:focus, a:focus-visible { outline: none;     /* or use your custom focus color */ outline-offset: 2px; }
+.top-navbar { font-family: "Inria Sans", sans-serif; position: sticky; top: 0; z-index: 1000; background: #ffffff;     /* background-color: #ffffff; 
 border-bottom: 1px solid #e0e0e0; 
 padding: 0; position: fixed; top: 0;
 left: 0; right: 0; width: 100%;
 z-index: 1000; */ }
-.navbar-container { box-shadow: 0px 1px 8px 0px #00000017; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; max-width: 100%; }
+.navbar-container { box-shadow: 0px 1px 8px 0px #00000017; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; max-width: 100%; }
 /* Logo Section */
 .logo-section { margin-right: 15px; }
 /* Desktop Navigation */
 .desktop-nav { display: flex; align-items: center; flex: 1; justify-content: space-between; }
 .nav-links { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; gap: 0; }
 .nav-links li { margin: 0; padding: 0; }
-.nav-links a { color: #000; text-decoration: none; font-size: 15px; font-weight: 400; padding: 18px 10px 10px 10px; display: block; white-space: nowrap; transition: all 0.2s; border-bottom: 3px solid transparent; position: relative; }
+.nav-links a { color: #000; text-decoration: none; font-size: 15px; font-weight: 400; padding: 10px 10px 10px 10px; display: block; white-space: nowrap; transition: all 0.2s; border-bottom: 3px solid transparent; position: relative; }
 .nav-links a:hover { border-bottom: 3px solid #ff0000; }
 .nav-links a.active { border-bottom: 3px solid #ff0000; font-weight: 500; }
 /* Right Section */
@@ -80,7 +72,6 @@ z-index: 1000; */ }
 .live-badge { padding: 0.25rem 0.5rem; font-size: 0.65rem; }
 }
 .content-container { padding: 0px; }
-
 /* --- FOOTER STYLES --- */
 .footer { background: #0d141f; color: #c5cdd9; padding: 50px 30px 20px; font-family: Arial, sans-serif; }
 .footer-container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
@@ -100,3 +91,19 @@ z-index: 1000; */ }
 .footer-container { flex-direction: column; }
 .footer-bottom { text-align: center; gap: 10px; }
 }
+/* PRIMARY */
+.btn-primary { background: #e74c3c !important; border-color: #e74c3c !important; }
+.btn-primary:hover { background: #cf3f32 !important; border-color: #cf3f32 !important; }
+/* SECONDARY */
+.btn-secondary { background: #2c3e50 !important; border-color: #2c3e50 !important; }
+.btn-secondary:hover { background: #1f2a36 !important; border-color: #1f2a36 !important; }
+/* TERTIARY (Ghost) */
+.btn-tertiary { background: transparent !important; border: none !important; color: #e74c3c !important; }
+.btn-tertiary:hover { background: rgba(231, 76, 60, 0.1) !important; }
+/* OUTLINE */
+.btn-outline-primary { border: 2px solid #e74c3c !important; color: #e74c3c !important; background: transparent !important; }
+.btn-outline-primary:hover { background: #e74c3c !important; color: #ffffff !important; }
+/* SIZES */
+.btn-sm-custom { padding: 6px 14px !important; font-size: 14px !important; }
+.btn-md-custom { padding: 10px 22px !important; font-size: 16px !important; }
+.btn-lg-custom { padding: 14px 28px !important; font-size: 18px !important; }

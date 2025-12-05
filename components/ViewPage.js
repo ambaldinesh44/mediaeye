@@ -291,7 +291,7 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
             {/* RIGHT */}
             <div className="col-lg-3 col-md-4 col-12">
 
-              <div className="section-box ad-box" style={{ position: 'sticky', top: '20px' }}>
+              <div className="" style={{ position: 'sticky', top: '20px' }}>
                 {/* Advertisement Banner 1 */}
               
 
