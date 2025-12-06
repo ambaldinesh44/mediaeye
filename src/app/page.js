@@ -122,16 +122,7 @@ export default async function WelcomePage({ searchParams }) {
        11: "sports-news",
          10: "politics",
           16: "personality",
-      //   
-      /*  12: "business",
-       1043:"special-news",
-       6: "national",
-       47: "crime",
-       8: "international",
-       16: "personality",
-       10: "politics",
-       10797: "hot-news",
-       2377: "cricket" */
+     
     };
     const categories = [
       10797,
@@ -148,15 +139,7 @@ export default async function WelcomePage({ searchParams }) {
       11,
       10,
       16
-      /*   12,
-        1043,
-        6,
-        47,
-        8,
-        16,
-        10,
-        10797,
-        2377, */
+     
     ];
 
     /* const ress = await fetch(
