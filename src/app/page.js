@@ -116,7 +116,6 @@ export default async function WelcomePage({ searchParams }) {
       20: "science",
       56: "technology",
       13924: "editorial",
-      56: "technology",
       12: "business",
       17: "cinema",
       94: "esg",

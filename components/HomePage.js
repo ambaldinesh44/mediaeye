@@ -1117,7 +1117,10 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
         {[
           { slug: 'personality', title: 'Personality News', href: '/category/personality' },
           { slug: 'politics', title: 'Politics News', href: '/category/politics' },
-          { slug: 'sports-news', title: 'Sports News', href: '/category/sports-news' }
+          { slug: 'sports-news', title: 'Sports News', href: '/category/sports-news' },
+           { slug: 'business', title: 'Business News', href: '/category/business' },
+            { slug: 'cinema', title: 'Cinema News', href: '/category/cinema' },
+             { slug: 'esg', title: 'ESG News', href: '/category/esg' }
         ].map((category) => (
           <div class="container-custom" key={category.slug}>
             <div class="row g-3">
