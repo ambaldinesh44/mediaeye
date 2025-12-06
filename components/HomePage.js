@@ -670,7 +670,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
           </div>
         </div>
 
-           <div class="container-custom ">
+        <div class="container-custom ">
           <div class="row g-3">
 
 
@@ -748,7 +748,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
             <div class="col-lg-3 col-md-4 col-12 d-none d-lg-block ">
               <div class="sponsored-wrapper">
 
-        
+
 
               </div>
 
@@ -836,7 +836,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
             <div class="col-lg-3 col-md-4 col-12 d-none d-lg-block ">
               <div class="sponsored-wrapper">
 
-        {categoryNews?.find(cat => cat.categoryName === 'city')?.posts?.length > 0 && (
+                {categoryNews?.find(cat => cat.categoryName === 'city')?.posts?.length > 0 && (
                   <div className="section-box right" >
                     <div className="section-title">
                       <h3>City News</h3>
@@ -955,7 +955,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
             <div class="col-lg-3 col-md-4 col-12">
               <div>
 
-                    {categoryNews?.find(cat => cat.categoryName === 'science')?.posts?.length > 0 && (
+                {categoryNews?.find(cat => cat.categoryName === 'science')?.posts?.length > 0 && (
                   <div className="section-box right" >
                     <div className="section-title">
                       <h3>Science News</h3>
@@ -1047,14 +1047,14 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
             <div class="col-lg-3 col-md-4 col-12">
 
               <div class="sponsored-wrapper">
-               
-                    {categoryNews?.find(cat => cat.categoryName === 'technology')?.posts?.length > 0 && (
+
+                {categoryNews?.find(cat => cat.categoryName === 'technology')?.posts?.length > 0 && (
                   <div className="section-box right" >
                     <div className="section-title">
                       <h3>Technology News</h3>
                     </div>
                     <div className="side-list">
-                      {categoryNews.find(cat => cat.categoryName === 'technology')?.posts?.slice(0,5).map((post) => (
+                      {categoryNews.find(cat => cat.categoryName === 'technology')?.posts?.slice(0, 5).map((post) => (
                         <Link key={post.id} href={getPostUrl(post)}>
                           <div className="list-item">
                             <Image
@@ -1114,88 +1114,84 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
         </div>
 
 
+        {[
+          { slug: 'personality', title: 'Personality News', href: '/category/personality' },
+          { slug: 'politics', title: 'Politics News', href: '/category/politics' },
+          { slug: 'sports-news', title: 'Sports News', href: '/category/sports-news' }
+        ].map((category) => (
+          <div class="container-custom" key={category.slug}>
+            <div class="row g-3">
+              <div class=" col-12">
+                <div class="section-box" id={`${category.slug}-section`}>
+                  <div class="section-title">
+                    <h2>{category.title}</h2>
+                    <Link href={category.href}>View All →</Link>
+                  </div>
 
-
-
-        <div class="container-custom">
-          <div class="row g-3">
-
-   <div class=" col-12">
-              <div class="section-box" id="international-section">
-                <div class="section-title">
-                  <h2>Sports News</h2>
-                  <Link href="/category/international">View All →</Link>
-                </div>
-
-              <div class="row">
+                  <div class="row">
                     <div class="col-12 col-md-6">
-              <div class="section-box" id="international-section">
-              
-                {categoryNews.find(cat => cat.categoryName === 'sports-news')?.posts?.slice(0, 5).map((post) => (
-                  <Link key={post.id} href={getPostUrl(post)}>
-                    <div class="news-row">
-                      <div class="news-thumb">
-                        <Image
-                          src={getFeaturedImage(post)}
-                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'international news'}
-                          width={400}
-                          height={250}
-                          loading="lazy"
-                          className="img-fluid"
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                      </div>
-                      <div class="news-content">
-                        <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                        <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
-                        <div class="news-meta">
-                          <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-
-              </div>
-            </div>
-
-
-         <div class="col-12 col-md-6">
-                   <div class="section-box" >
-                {categoryNews.find(cat => cat.categoryName === 'sports-news')?.posts?.slice(5, 10).map((post) => (
-                  <Link key={post.id} href={getPostUrl(post)}>
-                    <div class="news-row">
-                      <div class="news-thumb">
-                        <Image
-                          src={getFeaturedImage(post)}
-                          alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'international news'}
-                          width={400}
-                          height={250}
-                          loading="lazy"
-                          className="img-fluid"
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                      </div>
-                      <div class="news-content">
-                        <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-                        <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
-                        <div class="news-meta">
-                          <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
-                        </div>
+                      <div class="section-box">
+                        {categoryNews.find(cat => cat.categoryName === category.slug)?.posts?.slice(0, 5).map((post) => (
+                          <Link key={post.id} href={getPostUrl(post)}>
+                            <div class="news-row">
+                              <div class="news-thumb">
+                                <Image
+                                  src={getFeaturedImage(post)}
+                                  alt={post.title.rendered?.replace(/<[^>]*>/g, '') || category.title}
+                                  width={400}
+                                  height={250}
+                                  loading="lazy"
+                                  className="img-fluid"
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </div>
+                              <div class="news-content">
+                                <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                                <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
+                                <div class="news-meta">
+                                  <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
                       </div>
                     </div>
-                  </Link>
-                ))}
+
+                    <div class="col-12 col-md-6">
+                      <div class="section-box">
+                        {categoryNews.find(cat => cat.categoryName === category.slug)?.posts?.slice(5, 10).map((post) => (
+                          <Link key={post.id} href={getPostUrl(post)}>
+                            <div class="news-row">
+                              <div class="news-thumb">
+                                <Image
+                                  src={getFeaturedImage(post)}
+                                  alt={post.title.rendered?.replace(/<[^>]*>/g, '') || category.title}
+                                  width={400}
+                                  height={250}
+                                  loading="lazy"
+                                  className="img-fluid"
+                                  style={{ width: '100%', height: 'auto' }}
+                                />
+                              </div>
+                              <div class="news-content">
+                                <h5 dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                                <p dangerouslySetInnerHTML={{ __html: post.excerpt?.rendered || '' }} />
+                                <div class="news-meta">
+                                  <i class="bi bi-clock clock-icon"></i> {getTimeAgo(post.date)}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </div>
               </div>
-                </div>
-             </div>
-
-          
-
+            </div>
           </div>
-        </div>
+        ))}
 
 
 
