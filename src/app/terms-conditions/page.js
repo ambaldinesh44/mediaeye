@@ -19,7 +19,20 @@ async function fetchTermsConditionsData() {
     const data = await response.json();
 
     if (data && data.length > 0) {
-      return { content: data[0], error: null };
+      const cleanedContent = {
+        ...data[0],
+        content: {
+          ...data[0].content,
+          rendered: data[0].content.rendered
+            .replace(/\[vc_row\]/g, '')
+            .replace(/\[\/vc_row\]/g, '')
+            .replace(/\[vc_column\]/g, '')
+            .replace(/\[\/vc_column\]/g, '')
+            .replace(/\[vc_column_text\]/g, '')
+            .replace(/\[\/vc_column_text\]/g, '')
+        }
+      };
+      return { content: cleanedContent, error: null };
     } else {
       return { content: null, error: 'Terms and conditions content not found' };
     }

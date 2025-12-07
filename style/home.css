@@ -227,10 +227,10 @@
 .main-card { height: 280px; }
 /* Tablets */ }
 .breadcrumb-wrapper { background: transparent; border-bottom: none; }
-.custom-breadcrumb { font-weight: 500; padding: 10px 0; margin-bottom: 0; }
+.custom-breadcrumb { font-weight: 400; padding: 10px 0; margin-bottom: 0; font-size: 13px; }
 .breadcrumb-item a { text-decoration: none; color: #000; transition: 0.2s; }
 .breadcrumb-item a:hover { color: #0d6efd; }
-.breadcrumb-item.active { color: #111; font-weight: 600; }
+.breadcrumb-item.active { color: #111; font-weight: 400; }
 /* Responsive (mobile) */
 @media (max-width:576px) {
 .custom-breadcrumb { font-size: 13px; }
@@ -244,7 +244,7 @@
 .article-detailed h2 { padding: 0px; margin: 0px; font-size: 20px; font-weight: 600; margin-bottom: 15px; }
 /* TAGS */
 .tag-box { background: #f8f8f8; padding: 20px; border-radius: 4px; }
-.tag { display: inline-block; background: #e6e6e6; padding: 6px 12px; border-radius: 4px; margin: 4px; }
+.tag { display: inline-block; background: #fff; padding: 6px 12px; border-radius: 15px; margin: 4px; border:1px solid #CECECE }
 .share-icons i { font-size: 18px; margin-right: 10px; cursor: pointer; }
 /* PREVIOUS / NEXT */
 .nav-box { background: #fafafa; padding: 18px 25px; margin-top: 30px; font-weight: 600; font-size: 16px; display: flex; justify-content: space-between; border-radius: 4px; }
@@ -340,7 +340,6 @@ textarea.form-control { height: 180px; resize: none; }
 .tech-img img { width: 120px; height: 120px; object-fit: cover; border-radius: 14px; }
 /* CONTENT */
 .tag-time { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
-.tag { background: #eef2ff; color:gray; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight:500; }
 .time { font-size: 13px; color: #888; }
 .tech-title { font-size: 18px; font-weight: 600; margin-bottom: 6px; }
 .tech-desc { color: #666; margin-bottom: 10px; }

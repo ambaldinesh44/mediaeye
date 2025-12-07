@@ -3,8 +3,8 @@ import '../style/static-page.css';
 export default function TermsConditionsPage({ content, error }) {
   if (error) {
     return (
-      <div className="static-page-wrapper">
-        <div className="container">
+             <div className='main-wrapper'>
+
           <div className="static-page-container">
             <div className="error-message">
               <i className="bi bi-exclamation-triangle"></i>
@@ -13,14 +13,14 @@ export default function TermsConditionsPage({ content, error }) {
             </div>
           </div>
         </div>
-      </div>
+  
     );
   }
 
   if (!content) {
     return (
-      <div className="static-page-wrapper">
-        <div className="container">
+                <div className='main-wrapper'>
+
           <div className="static-page-container">
             <div className="error-message">
               <i className="bi bi-exclamation-triangle"></i>
@@ -29,16 +29,16 @@ export default function TermsConditionsPage({ content, error }) {
             </div>
           </div>
         </div>
-      </div>
+  
     );
   }
 
   return (
-    <div className="static-page-wrapper">
-      <div className="container">
+             <div className='main-wrapper'>
+
         <div className="static-page-container">
           <div className="static-page-header">
-            <h1>{content?.title?.rendered || 'Terms & Conditions'}</h1>
+            <h1 dangerouslySetInnerHTML={{ __html: content?.title?.rendered || 'Terms & Conditions' }} />
             {content?.date && (
               <p className="last-updated">
                 Last Updated: {new Date(content.date).toLocaleDateString('en-US', {
@@ -56,6 +56,6 @@ export default function TermsConditionsPage({ content, error }) {
           />
         </div>
       </div>
-    </div>
+
   );
 }

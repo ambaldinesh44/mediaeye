@@ -1,7 +1,20 @@
+
+/* Main Content */
+.main-wrapper { width: 100%; padding: 20px; margin: 0 auto; transition: margin-top 0.3s ease; }
+/* Automatically push top when rotator removed */
+.news-rotator-wrapper:empty + .main-wrapper { margin-top: 0; }
+@media (min-width:1400px) {
+/* you can change this breakpoint */
+.main-wrapper { max-width: 1400px;         /* fixed width */ }
+}
 .static-page-wrapper { padding: 40px 0; background-color: #f8f9fa; min-height: 100vh; }
-.static-page-container { max-width: 900px; margin: 0 auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }
+.static-page-container {background: #fff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.07);
+  margin-bottom: 20px;}
 /* Header Section */
-.static-page-header { text-align: center; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 2px solid #dc3545; }
+.static-page-header {  margin-bottom: 20px; padding-bottom: 20px; border-bottom: 2px solid #dc3545; }
 .static-page-header h1 { font-size: 2.5rem; font-weight: 700; color: #333; margin-bottom: 15px; }
 .static-page-header .last-updated { font-size: 0.9rem; color: #666; font-style: italic; }
 /* Content Section */

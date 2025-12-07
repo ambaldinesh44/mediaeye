@@ -48,7 +48,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body  className={`${inter.className} ${inria.className}`}>
+      <body  className={`${inter.className} ${inria.className}`} style={{ fontFamily: '"Inter", Arial, sans-serif' }}>
          <Header />
         <main>
           {children}

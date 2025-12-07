@@ -164,8 +164,8 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
                       <Image
                         src={post._embedded?.author?.[0]?.mpp_avatar?.['96'] || '/images/default-avatar.png'}
                         alt={post._embedded?.author?.[0]?.name || 'Admin'}
-                        width={24}
-                        height={24}
+                        width={32}
+                        height={32}
                         className="author-avatar"
                         style={{ borderRadius: '50%', marginRight: '8px' }}
                       />
