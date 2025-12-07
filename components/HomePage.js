@@ -129,13 +129,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
               >
                 Latest
               </div>
-              <div
-                className={`category-item ${activeCategory === 'Top' ? 'active' : ''}`}
-                onClick={() => scrollToSection('top-news-section', 'Top')}
-              >
-                Top
-              </div>
-              <div
+               <div
                 className={`category-item ${activeCategory === 'National' ? 'active' : ''}`}
                 onClick={() => scrollToSection('national-section', 'National')}
               >
@@ -148,22 +142,30 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
                 International
               </div>
               <div
+                className={`category-item ${activeCategory === 'Top' ? 'active' : ''}`}
+                onClick={() => scrollToSection('top-news-section', 'Top')}
+              >
+                Top
+              </div>
+             
+                <div
+                className={`category-item ${activeCategory === 'Hot' ? 'active' : ''}`}
+                onClick={() => scrollToSection('hot-news-section', 'Hot')}
+              >
+                Hot
+              </div>
+             
+                <div
+                className={`category-item ${activeCategory === 'Special' ? 'active' : ''}`}
+                onClick={() => scrollToSection('special-news-section', 'Special')}
+              >
+                Special
+              </div>
+              <div
                 className={`category-item ${activeCategory === 'Blog' ? 'active' : ''}`}
                 onClick={() => scrollToSection('blog-section', 'Blog')}
               >
                 Blog
-              </div>
-              <div
-                className={`category-item ${activeCategory === 'Gender' ? 'active' : ''}`}
-                onClick={() => scrollToSection('gender-section', 'Gender')}
-              >
-                Gender
-              </div>
-              <div
-                className={`category-item ${activeCategory === 'Articles' ? 'active' : ''}`}
-                onClick={() => scrollToSection('articles-section', 'Articles')}
-              >
-                Articles
               </div>
               <div
                 className={`category-item ${activeCategory === 'Videos' ? 'active' : ''}`}
@@ -172,28 +174,41 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
                 Videos
               </div>
               <div
-                className={`category-item ${activeCategory === 'Social Media' ? 'active' : ''}`}
-                onClick={() => scrollToSection('social-media-section', 'Social Media')}
+                className={`category-item ${activeCategory === 'Personality' ? 'active' : ''}`}
+                onClick={() => scrollToSection('personality-section', 'Personality')}
               >
-                Social Media
+                Personality
               </div>
               <div
-                className={`category-item ${activeCategory === 'Web Stories' ? 'active' : ''}`}
-                onClick={() => scrollToSection('web-stories-section', 'Web Stories')}
+                className={`category-item ${activeCategory === 'Politics' ? 'active' : ''}`}
+                onClick={() => scrollToSection('politics-section', 'Politics')}
               >
-                Web Stories
+                Politics
+              </div>
+              
+              <div
+                className={`category-item ${activeCategory === 'Sports' ? 'active' : ''}`}
+                onClick={() => scrollToSection('sports-news-section', 'Sports')}
+              >
+              Sports
               </div>
               <div
-                className={`category-item ${activeCategory === 'Photos' ? 'active' : ''}`}
-                onClick={() => scrollToSection('photos-section', 'Photos')}
+                className={`category-item ${activeCategory === 'Business' ? 'active' : ''}`}
+                onClick={() => scrollToSection('business-section', 'Business')}
               >
-                Photos
+               Business
               </div>
               <div
-                className={`category-item ${activeCategory === 'Campaigns' ? 'active' : ''}`}
-                onClick={() => scrollToSection('campaigns-section', 'Campaigns')}
+                className={`category-item ${activeCategory === 'Cinema' ? 'active' : ''}`}
+                onClick={() => scrollToSection('cinema-section', 'Cinema')}
               >
-                Campaigns
+                Cinema
+              </div>
+              <div
+                className={`category-item ${activeCategory === 'ESG' ? 'active' : ''}`}
+                onClick={() => scrollToSection('esg-section', 'ESG')}
+              >
+                ESG
               </div>
 
             </div>
@@ -675,7 +690,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
 
 
             <div class="col-lg-9 col-md-12 col-12">
-              <div class="section-box" id="top-news-section">
+              <div class="section-box" id="hot-news-section">
                 <div class="section-title">
                   <h2>Hot News</h2>
                   <Link href="/category/hot-news">View All →</Link>
@@ -763,7 +778,7 @@ export const HomePage = ({ mostViewed = [], results = [], categoryNews = [], top
 
 
             <div class="col-lg-9 col-md-12 col-12">
-              <div class="section-box" id="top-news-section">
+              <div class="section-box" id="special-news-section">
                 <div class="section-title">
                   <h2>Special News</h2>
                   <Link href="/category/special-news">View All →</Link>
