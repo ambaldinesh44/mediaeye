@@ -37,6 +37,28 @@ export const SearchListPage = ({ posts = [], searchTerm = '', currentPage = 1, t
   return (
     <>
       <div className="main-wrapper">
+        <div className="breadcrumb-wrapper">
+          <div className="container-custom">
+            <nav aria-label="breadcrumb">
+              <ol className="breadcrumb custom-breadcrumb">
+                <li className="breadcrumb-item">
+                  <Link href="/">
+                    <i className="bi bi-house-door"></i> Home
+                  </Link>
+                </li>
+
+                <li className="breadcrumb-item">
+                  <Link href="/">Search</Link>
+                </li>
+
+                <li className="breadcrumb-item active" aria-current="page">
+                  {searchTerm}
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+
         <div className="container-custom">
           <div className="row g-3">
             <div className="col-12">
