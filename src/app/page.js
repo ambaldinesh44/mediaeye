@@ -15,8 +15,10 @@ export default async function WelcomePage({ searchParams }) {
 
   const params = await searchParams;
   const term = params?.s || params?.search || ""; // e.g. ?s=finesh or ?search=finesh
+  const page = parseInt(params?.page || "1", 10);
 
   let results = [];
+  let totalResults = 0;
   let topCategoeyNews = [];
   let top_news = [];
   let mostViewed = [];
@@ -25,14 +27,15 @@ export default async function WelcomePage({ searchParams }) {
   // If search term exists, fetch search results
   if (term) {
     try {
-      console.log(`${CONFIG.API_URL}posts?search=${encodeURIComponent(term)}&orderby=date&order=desc&per_page=10&_embed`);
-      const res = await fetch(
-        `${CONFIG.API_URL}posts?search=${encodeURIComponent(term)}&orderby=date&order=desc&per_page=10&_embed`
-      );
+      const perPage = 10;
+      const searchUrl = `${CONFIG.API_URL}posts?search=${encodeURIComponent(term)}&orderby=date&order=desc&per_page=${perPage}&page=${page}&_embed`;
+      console.log(searchUrl);
+      const res = await fetch(searchUrl);
 
       if (!res.ok) {
         console.error(`Search failed: ${res.status} ${res.statusText}`);
         results = [];
+        totalResults = 0;
       } else {
         const contentType = res.headers.get('content-type');
         if (!contentType || !contentType.includes('application/json')) {
@@ -40,13 +43,18 @@ export default async function WelcomePage({ searchParams }) {
           const text = await res.text();
           console.error('Response body:', text.substring(0, 200));
           results = [];
+          totalResults = 0;
         } else {
           results = await res.json();
+          // Get total count from WordPress API header
+          const totalHeader = res.headers.get('X-WP-Total');
+          totalResults = totalHeader ? parseInt(totalHeader, 10) : results.length;
         }
       }
     } catch (error) {
       console.error('Error fetching search results:', error);
       results = [];
+      totalResults = 0;
     }
   } else {
     // Fetch category 72 top 10 latest posts
@@ -291,7 +299,7 @@ export default async function WelcomePage({ searchParams }) {
       </pre>
 
       {term ? (
-        <SearchListPage posts={results} searchTerm={term} />
+        <SearchListPage posts={results} searchTerm={term} currentPage={page} totalResults={totalResults} />
       ) : (
         <HomePage term={term} results={results} categoryNews={topCategoeyNews} top_news={top_news} mostViewed={mostViewed} trendingTopics={trendingTopics} />
       )}
