@@ -71,6 +71,57 @@ export default async function MSMECategoryPage({ params }) {
 
     console.log("Total posts:", totalPage, "Category ID:", catId);
 
+    // Fetch sidebar categories: top-news and special-news
+    const sidebarCategories = {
+      1: "top-news",
+      72: "special-news",
+    };
+
+    const topCategoeyNews = await Promise.all(
+      Object.keys(sidebarCategories).map(async (catId) => {
+        try {
+          const res = await fetch(
+            `${CONFIG.API_URL}posts?categories=${catId}&orderby=date&order=desc&per_page=10&_embed`,
+            { next: { revalidate: 60 } }
+          );
+
+          if (!res.ok) {
+            console.error(`Failed to fetch category ${catId}: ${res.status} ${res.statusText}`);
+            return {
+              categoryId: catId,
+              categoryName: sidebarCategories[catId],
+              posts: [],
+            };
+          }
+
+          const contentType = res.headers.get('content-type');
+          if (!contentType || !contentType.includes('application/json')) {
+            console.error(`Invalid content type for category ${catId}: ${contentType}`);
+            return {
+              categoryId: catId,
+              categoryName: sidebarCategories[catId],
+              posts: [],
+            };
+          }
+
+          const posts = await res.json();
+
+          return {
+            categoryId: catId,
+            categoryName: sidebarCategories[catId],
+            posts,
+          };
+        } catch (error) {
+          console.error(`Error fetching category ${catId}:`, error);
+          return {
+            categoryId: catId,
+            categoryName: sidebarCategories[catId],
+            posts: [],
+          };
+        }
+      })
+    );
+
     return (
       <>
         <CategoryPostList
@@ -80,6 +131,7 @@ export default async function MSMECategoryPage({ params }) {
           perPage={perPage}
           totalPage={totalPage}
           currentPage={currentPage}
+          topCategoeyNews={topCategoeyNews}
         />
       </>
     );
