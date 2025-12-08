@@ -59,6 +59,18 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
 
   const cleanedPostContent = cleanContent(post.content.rendered);
 
+  // Check if this is an e-paper post
+  const isEPaper = categorySlug === 'e-paper';
+
+  // Extract PDF URL from content if it's an e-paper
+  const extractPdfUrl = (content) => {
+    if (!content) return null;
+    const iframeMatch = content.match(/src="([^"]*\.pdf[^"]*)"/i);
+    return iframeMatch ? iframeMatch[1] : null;
+  };
+
+  const pdfUrl = isEPaper ? extractPdfUrl(post.content.rendered) : null;
+
   // JSON-LD structured data for article
   const articleStructuredData = {
     "@context": "https://schema.org",
@@ -173,19 +185,78 @@ export const ViewPage = ({ topCategoeyNews,post, url, relatedPosts, prevPost, ne
                     </div>
                   </div>
 
-                  <div className="article-detailed-img">
-                    <Image
-                      src={getFeaturedImage(post)}
-                      alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'article'}
-                      width={1200}
-                      height={675}
-                      priority
-                      className="img-fluid"
-                      style={{ width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '20px' }}
-                    />
-                  </div>
+                  {!isEPaper && (
+                    <div className="article-detailed-img">
+                      <Image
+                        src={getFeaturedImage(post)}
+                        alt={post.title.rendered?.replace(/<[^>]*>/g, '') || 'article'}
+                        width={1200}
+                        height={675}
+                        priority
+                        className="img-fluid"
+                        style={{ width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '20px' }}
+                      />
+                    </div>
+                  )}
 
-                  <div dangerouslySetInnerHTML={{ __html: cleanedPostContent }} />
+                  {isEPaper && pdfUrl ? (
+                    <div style={{ marginBottom: '20px' }}>
+                      <div style={{
+                        position: 'relative',
+                        width: '100%',
+                        minHeight: '800px',
+                        backgroundColor: '#525659',
+                        borderRadius: '8px',
+                        overflow: 'hidden'
+                      }}>
+                        <object
+                          data={pdfUrl}
+                          type="application/pdf"
+                          width="100%"
+                          height="800"
+                          style={{
+                            width: '100%',
+                            minHeight: '800px',
+                            display: 'block'
+                          }}
+                        >
+                          <iframe
+                            src={`https://docs.google.com/viewer?url=${encodeURIComponent(pdfUrl)}&embedded=true`}
+                            width="100%"
+                            height="800"
+                            style={{
+                              border: 'none',
+                              width: '100%',
+                              minHeight: '800px',
+                              display: 'block'
+                            }}
+                            title="E-Paper PDF Viewer"
+                          >
+                            <p>Your browser does not support PDFs.
+                              <a href={pdfUrl} target="_blank" rel="noopener noreferrer">Download the PDF</a>
+                            </p>
+                          </iframe>
+                        </object>
+                      </div>
+                      {/* <div style={{ marginTop: '15px', textAlign: 'center' }}>
+                        <a
+                          href={pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-primary"
+                          style={{
+                            display: 'inline-block',
+                            padding: '12px 30px',
+                            fontSize: '16px'
+                          }}
+                        >
+                          <i className="bi bi-download"></i> Download / Open PDF in New Tab
+                        </a>
+                      </div> */}
+                    </div>
+                  ) : (
+                    <div dangerouslySetInnerHTML={{ __html: cleanedPostContent }} />
+                  )}
 
                   <div className="py-4">
 
