@@ -1,5 +1,19 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import validator from 'validator';
+
+// HTML escape function to prevent XSS in emails
+function escapeHtml(text) {
+  if (!text) return '';
+  const map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  };
+  return text.toString().replace(/[&<>"']/g, m => map[m]);
+}
 
 export async function POST(request) {
   try {
@@ -14,14 +28,18 @@ export async function POST(request) {
       );
     }
 
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // Validate email format using validator library
+    if (!validator.isEmail(email)) {
       return NextResponse.json(
         { message: 'Invalid email format' },
         { status: 400 }
       );
     }
+
+    // Sanitize inputs
+    const sanitizedName = escapeHtml(name);
+    const sanitizedSubject = escapeHtml(subject);
+    const sanitizedMessage = escapeHtml(message);
 
     // Create transporter with Gmail SMTP
     const transporter = nodemailer.createTransport({
@@ -37,10 +55,10 @@ export async function POST(request) {
 
     // Email to admin
     const adminMailOptions = {
-      from: `"${name}" <${process.env.SMTP_EMAIL}>`,
+      from: `"${sanitizedName}" <${process.env.SMTP_EMAIL}>`,
       to: process.env.ADMIN_EMAIL || process.env.SMTP_EMAIL,
       replyTo: email,
-      subject: `Contact Form: ${subject}`,
+      subject: `Contact Form: ${sanitizedSubject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background-color: #dc3545; color: white; padding: 20px; text-align: center;">
@@ -51,20 +69,20 @@ export async function POST(request) {
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold;">Name:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">${name}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">${sanitizedName}</td>
               </tr>
               <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold;">Email:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><a href="mailto:${email}">${email}</a></td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td>
               </tr>
               <tr>
                 <td style="padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold;">Subject:</td>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd;">${subject}</td>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">${sanitizedSubject}</td>
               </tr>
             </table>
             <h3 style="color: #333; margin-top: 20px;">Message</h3>
             <div style="background-color: white; padding: 15px; border-radius: 5px; border-left: 4px solid #dc3545;">
-              ${message.replace(/\n/g, '<br>')}
+              ${sanitizedMessage.replace(/\n/g, '<br>')}
             </div>
           </div>
           <div style="background-color: #333; color: white; padding: 15px; text-align: center; font-size: 12px;">
@@ -85,16 +103,16 @@ export async function POST(request) {
             <h2 style="margin: 0;">Thank You for Contacting Us!</h2>
           </div>
           <div style="padding: 20px; background-color: #f8f9fa;">
-            <p style="font-size: 16px; color: #333;">Dear ${name},</p>
+            <p style="font-size: 16px; color: #333;">Dear ${sanitizedName},</p>
             <p style="font-size: 14px; color: #666; line-height: 1.6;">
               Thank you for reaching out to Media Eye News. We have received your message and will get back to you as soon as possible.
             </p>
             <div style="background-color: white; padding: 15px; border-radius: 5px; margin: 20px 0;">
               <h3 style="color: #333; margin-top: 0;">Your Message Summary:</h3>
-              <p style="margin: 5px 0; color: #666;"><strong>Subject:</strong> ${subject}</p>
+              <p style="margin: 5px 0; color: #666;"><strong>Subject:</strong> ${sanitizedSubject}</p>
               <p style="margin: 5px 0; color: #666;"><strong>Message:</strong></p>
               <div style="padding: 10px; background-color: #f8f9fa; border-radius: 5px; margin-top: 10px;">
-                ${message.replace(/\n/g, '<br>')}
+                ${sanitizedMessage.replace(/\n/g, '<br>')}
               </div>
             </div>
             <p style="font-size: 14px; color: #666;">
